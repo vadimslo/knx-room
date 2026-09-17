@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>7.8 Patents, freedom-to-operate analysis and open-source licence inventory · Konnex data room</title><link rel="stylesheet" href="../../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../../index.html"><img src="../../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../../index.html" class="">Overview</a><a href="../../items/9.3.html" class="">Q&amp;A log</a><a href="../../tokenomics-rationale.html" class="">Tokenomics</a><a href="../../files.html" class="">Files</a><a href="../../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../../t2/sections/7-legal.html">Section 7 · Legal and regulatory</a></div><h1><span class="id">7.8</span> Patents, freedom-to-operate analysis and open-source licence inventory</h1><p><span class="badge b-t2">Tier 2</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Patent position and freedom-to-operate analysis; the licence inventory of the public repositories is in the room.</div><p class="lede">The public Konnex code is released under permissive terms: the chain runtime under the Unlicense and the SDK, the drone subnet and the robot gateway under MIT. All four repositories are forks or derivatives of third-party open-source projects (Bittensor subtensor and SDK, the Bittensor subnet template, OpenFly-Platform, OpenClaw), whose obligations are limited to retaining copyright and licence notices, with one point to manage: the upstream subtensor repository moved from the Unlicense to Apache-2.0 in July 2026, so any upstream code merged after that date carries Apache-2.0 notice and patent terms.</p>
+
+<h2>Licence inventory of the public repositories</h2>
+<table class="data">
+<thead><tr><th>Repository</th><th>Konnex licence</th><th>Upstream project</th><th>Upstream licence</th><th>Obligation carried</th></tr></thead>
+<tbody>
+<tr><td>konnex-chain-subtensor</td><td>Unlicense (public domain dedication); Cargo manifest also declares Unlicense</td><td>Bittensor subtensor (opentensor/subtensor)</td><td>Unlicense at the fork point (initial commit March 2023); relicensed to Apache-2.0 on 9 July 2026</td><td>None for code taken under the Unlicense. Code merged from upstream after 9 July 2026 requires retaining the Apache-2.0 licence text and notices and carries its patent grant and termination clause; the fork's last commit predates the relicensing</td></tr>
+<tr><td>konnex-chain-sdk</td><td>MIT</td><td>Bittensor SDK (opentensor/bittensor)</td><td>MIT</td><td>Retain the upstream copyright and permission notice (present in the repository LICENSE)</td></tr>
+<tr><td>knx-subnet-drone-navigation</td><td>MIT (licence file carries the Opentensor 2023 copyright)</td><td>Bittensor subnet template; OpenFly-Platform (Shanghai Artificial Intelligence Laboratory) as a git submodule</td><td>MIT; MIT</td><td>Retain both copyright notices; the submodule carries its own licence file</td></tr>
+<tr><td>knx-openclaw</td><td>MIT (licence file carries the original author's copyright)</td><td>OpenClaw, formerly Clawdbot, AI gateway</td><td>MIT (copyright held by the OpenClaw Foundation as of 2026)</td><td>Retain the copyright and permission notice</td></tr>
+</tbody>
+</table>
+
+<h2>Third-party models and services used by the reference stacks</h2>
+<table class="data">
+<thead><tr><th>Component</th><th>Used by</th><th>Terms</th></tr></thead>
+<tbody>
+<tr><td>openfly-agent-7b (IPEC-COMMUNITY, Hugging Face)</td><td>Drone subnet miner policy and validator assets</td><td>MIT per the model card</td></tr>
+<tr><td>OpenFly_DataGen environment dataset (IPEC-COMMUNITY)</td><td>Unreal Engine small-city environment for validator synthetic rounds</td><td>No licence field on the dataset card; distributed alongside OpenFly-Platform (MIT)</td></tr>
+<tr><td>Cosmos-Policy-RoboCasa-Predict2-2B (NVIDIA, Hugging Face)</td><td>Kitchen subnet on testnet (model named in the evidence metadata)</td><td>No licence field on the model card; the model is a fine-tune of NVIDIA's Cosmos-Predict2-2B-Video2World, whose terms apply</td></tr>
+<tr><td>gpt-4o-mini and other API models</td><td>Documented AI verifier; optional miner policy mode; optional external scorer</td><td>Provider terms of service; API keys held by each validator or miner operator</td></tr>
+<tr><td>Substrate and Polkadot SDK crates</td><td>Chain runtime and node</td><td>Runtime primitives and FRAME crates (sp-*, frame-*) under Apache-2.0; client crates (sc-*, including the GRANDPA client and CLI) under GPL-3.0-or-later with the Classpath exception, as inherited from the subtensor dependency tree</td></tr>
+</tbody>
+</table>
+
+<h2>Effect on Konnex's own code</h2>
+<p>None of the upstream licences is copyleft at the repository level, so Konnex is free to keep its additions private (the GitLab development model) and to license public releases as it chooses, provided the upstream notices remain. The Unlicense on the runtime fork means the published runtime carries no copyright claim by Konnex; anyone may copy it without attribution. The kitchen and SLAM subnet code, the explorer, the control plane and the token contract are not public and their licences are internal.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>LICENSE and Cargo.toml files of github.com/konnex-world/konnex-chain-subtensor, LICENSE of konnex-chain-sdk, knx-subnet-drone-navigation and knx-openclaw, accessed 17 September 2026.</li>
+<li>https://github.com/opentensor/subtensor, LICENSE history (Apache-2.0 commit of 9 July 2026), accessed 17 September 2026.</li>
+<li>https://github.com/opentensor/bittensor and https://github.com/openclaw/openclaw, licence metadata, accessed 17 September 2026.</li>
+<li>https://github.com/SHAILAB-IPEC/OpenFly-Platform, licence metadata, and .gitmodules of knx-subnet-drone-navigation, accessed 17 September 2026.</li>
+<li>Hugging Face model and dataset cards for IPEC-COMMUNITY/openfly-agent-7b, IPEC-COMMUNITY/OpenFly_DataGen and nvidia/Cosmos-Policy-RoboCasa-Predict2-2B, accessed 17 September 2026.</li>
+<li>crates.io licence metadata for sp-runtime, frame-support, sc-cli and sc-consensus-grandpa, accessed 17 September 2026.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../../assets/room.js"></script></body></html>

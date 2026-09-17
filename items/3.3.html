@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.3 Hardware root-of-trust design: how sensor data binds to device identity · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.3</span> Hardware root-of-trust design: how sensor data binds to device identity</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Named secure element or TEE, key provisioning, attestation format and the RobotIdentity binding; all testnet evidence to date is simulator-generated.</div><p class="lede">The design binds sensor data to a device by signing telemetry and media in hardware, in a trusted execution environment or secure element, before the bytes reach a general-purpose host operating system, and by registering the device's hardware-secured key in the RobotIdentity registry with an on-chain trust score. Validators then check signature, freshness and binding to the signed task so that synthetic or replayed streams fail verification. On the testnet today every published evidence bundle is generated in simulation, so the hardware path has not yet been exercised on chain.</p>
+
+<h2>The design as documented</h2>
+<table class="data">
+<thead><tr><th>Element</th><th>Design</th><th>Where documented</th></tr></thead>
+<tbody>
+<tr><td>Signing at capture</td><td>Trusted execution environments and secure elements sign telemetry and media at capture time, before the data reaches the host OS, so that post-hoc synthesis or replay can be detected off-device. The docs scope this as applying where enterprise assurance applies, for critical telemetry.</td><td>PoPW, TEE and contracts page; whitepaper section 8.2 (RobotIdentity: hardware-secured keys)</td></tr>
+<tr><td>Identity binding</td><td>RobotIdentity, a Layer 1 registry, holds hardware-secured keys and the device's on-chain trust score. The whitepaper's Bittensor comparison states that each robot possesses a cryptographically proven identity used to execute PoPW contracts with other robots.</td><td>Protocol architecture page; whitepaper section 8.2; April 2026 answers, section 7 to 8</td></tr>
+<tr><td>Task binding</td><td>The task instruction is signed by the operator and content-hashed; every packet's SHA-3 hash is the JobID. The PoPW check verifies that the sensor bundle is complete, time-aligned and bound to the signed JobID and deadline.</td><td>Whitepaper sections 8.2 and 8.4; PoPW page</td></tr>
+<tr><td>Freshness</td><td>Validators check signatures, freshness and binding to the task; timestamps must line up with the deadline; replayed streams fail.</td><td>PoPW page; whitepaper section 10.2</td></tr>
+<tr><td>Where the evidence is checked</td><td>Off-device, by validators with no operational stake in the operator; hardware roots the data and economics (stake, slashing) constrains behaviour.</td><td>PoPW page, sections on hardware-rooted provenance and economic finality</td></tr>
+</tbody>
+</table>
+<p>The whitepaper's data channels for evidence are video, GPS, IMU, torque and thermal; the SDK records camera, IMU, torque and thermal channels into a PoPW bundle. The whitepaper's Phase 2 extends the sensor set to IMU and LiDAR with hash anchors for data availability, and Phase 3 to a sensor-agnostic PoPW covering street cameras, thermal and pressure sensors.</p>
+
+<h2>Current state on the testnet</h2>
+<p>The latest evidence publications on all three live subnets (22 April 2026) carry verifier modes that name their simulation origin: <code>ue_synthetic</code> on drone-navigation (a frame captured in an Unreal Engine small-city environment by the validator itself), <code>cosmos_warm_eval</code> on robokitchen-vla (a kitchen simulator episode whose metadata names a Cosmos policy model), and <code>hybrid</code> on semantic-slam (a smoke-test round). In the public drone subnet code the executor role is played by miners answering a validator's synthetic frame; no device key signs the frame, and the validator's own wallet key signs the evidence hash remark. The SDK's robot attachment command takes a key file on the host (<code>--keys./keys.json</code>), which is a software key.</p>
+<p>The commercial flows described for the three hardware partners state where a physical device stands today: the drone flow accepts a physical or simulated drone on the hardware link page; the kitchen flow uses a physical arm in deployment and a simulator on testnet; the mapping flow accepts a live stream from a mapping robot or a pre-recorded RGBD plus telemetry bundle. None of these flows has yet produced a hardware-signed evidence bundle visible on the explorer.</p>
+
+<h2>What the design leaves to implementation</h2>
+<p>The documents name the mechanism (TEE or secure element signing, RobotIdentity binding) but not the component. The choice of secure element or TEE, the key provisioning and rotation procedure, the attestation format that reaches the validator, and the on-chain form of the RobotIdentity record are implementation decisions scheduled with the mainnet registries (hardened task registry, identity and payout routers in Phase 1 of the roadmap).</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>https://docs.konnex.world/understand-konnex/contracts-and-popw, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/protocol-architecture, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/roadmap, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/sdk/robots, accessed 17 September 2026.</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), sections 8.1, 8.2, 8.4, 10.2 and 11.</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer), snapshot 17 September 2026 10:39 UTC: latest publication metadata for netuids 3, 4 and 5.</li>
+<li>https://github.com/konnex-world/knx-subnet-drone-navigation, files template/validator/evidence.py and README, accessed 17 September 2026.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

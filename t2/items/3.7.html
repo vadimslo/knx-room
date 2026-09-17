@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.7 Third-party security audits, with remediation status · Konnex data room</title><link rel="stylesheet" href="../../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../../index.html"><img src="../../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../../index.html" class="">Overview</a><a href="../../items/9.3.html" class="">Q&amp;A log</a><a href="../../tokenomics-rationale.html" class="">Tokenomics</a><a href="../../files.html" class="">Files</a><a href="../../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../../t2/sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.7</span> Third-party security audits, with remediation status</h1><p><span class="badge b-t2">Tier 2</span> <span class="badge s-ready">Filed</span></p><p class="lede">Two third-party audits exist. SlowMist audited the chain runtime's escrow pallet, coinbase and epoch code (2,264 nSLOC) on 23 and 24 April 2026, raised nine findings (one high, four medium, one low, three suggestions), and issued a Passed result with every finding fixed. QuillAudits audited the KNX ERC-20 token contract on Base on 20 July 2026 and found a single informational issue, acknowledged. Before mainnet the company has committed to a re-audit of the release candidate as a hard launch gate, separate audits of the KNX bridge and the stablecoin bridge before bridge activation, and a live bug bounty from mainnet.</p>
+
+<h2>SlowMist: chain runtime, April 2026</h2>
+<table class="data">
+<thead><tr><th>Field</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Report number</td><td>0X002604240001</td></tr>
+<tr><td>Audit dates</td><td>23 to 24 April 2026 (application received 23 April 2026)</td></tr>
+<tr><td>Target</td><td>konnex-chain-subtensor, a Rust Substrate runtime fork of Bittensor; repository on the private GitLab</td></tr>
+<tr><td>Revisions</td><td>Initial e8dd5fb284c53dcb6ec8fea7d0c6e238ec8dea25; final b6a81b3fa4e62c36042d6dd56f04ae35702ce884</td></tr>
+<tr><td>Method</td><td>White-box code review with black-box and grey-box testing; 21 standard audit items (replay, reordering, race conditions, authority control, arithmetic, state consistency, failure rollback, weights, macros, and others), all Passed</td></tr>
+<tr><td>Result</td><td>Passed</td></tr>
+</tbody>
+</table>
+<table class="data">
+<thead><tr><th>Scope file</th><th>nSLOC</th></tr></thead>
+<tbody>
+<tr><td>pallets/konnex-escrow/src/lib.rs</td><td class="num">327</td></tr>
+<tr><td>pallets/konnex-escrow/src/weights.rs</td><td class="num">35</td></tr>
+<tr><td>pallets/subtensor/src/coinbase/block_emission.rs</td><td class="num">91</td></tr>
+<tr><td>pallets/subtensor/src/coinbase/block_step.rs</td><td class="num">204</td></tr>
+<tr><td>pallets/subtensor/src/coinbase/run_coinbase.rs</td><td class="num">703</td></tr>
+<tr><td>pallets/subtensor/src/epoch/run_epoch.rs</td><td class="num">904</td></tr>
+<tr><td>Total</td><td class="num">2,264</td></tr>
+</tbody>
+</table>
+<table class="data">
+<thead><tr><th>No.</th><th>Finding</th><th>Severity</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>N1</td><td>Emission silently lost when the root dividend swap fails</td><td>High</td><td>Fixed</td></tr>
+<tr><td>N2</td><td>Escrow placeholder weights do not cover real linear costs (vote_on_escrow, fund_escrow, refund_after_deadline)</td><td>Medium</td><td>Fixed</td></tr>
+<tr><td>N3</td><td>CRV3 reveal failure paths permanently destroy validators' encrypted weight commits</td><td>Medium</td><td>Fixed</td></tr>
+<tr><td>N4</td><td>Subnet emission loop pollutes global BlockEmission storage</td><td>Medium</td><td>Fixed</td></tr>
+<tr><td>N5</td><td>Subnets with tempo equal to 0 accumulate pending emission but never settle</td><td>Suggestion</td><td>Fixed</td></tr>
+<tr><td>N6</td><td>Alpha injected one-sidedly when registration is closed, breaking AMM invariants</td><td>Medium</td><td>Fixed</td></tr>
+<tr><td>N7</td><td>Voting after the escrow deadline creates a race against timeout refunds</td><td>Low</td><td>Fixed</td></tr>
+<tr><td>N8</td><td>Settled escrows remain permanently stored and cause state growth</td><td>Suggestion</td><td>Fixed</td></tr>
+<tr><td>N9</td><td>get_bonds_sparse does not filter out-of-bounds uid_j</td><td>Suggestion</td><td>Fixed</td></tr>
+</tbody>
+</table>
+<p>The remediation commits for N7, N8 and N9 are visible in the public runtime repository as the "audit n7", "audit n8" and "audit n9" commits of 27 April 2026. The report's own coverage statement limits the audit to the six files above; other pallets of the runtime, the subnet miner and validator code, and the explorer are outside its scope.</p>
+
+<h2>QuillAudits: KNX token contract, July 2026</h2>
+<table class="data">
+<thead><tr><th>Field</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Review date</td><td>20 July 2026 (review 1; no updated code received, no review 2)</td></tr>
+<tr><td>Contract</td><td>Konnex.sol, a fixed-supply ERC-20 on the OpenZeppelin standard; 1,000,000,000 KNX minted to the deployer at deployment; no further minting, burning or administrative control</td></tr>
+<tr><td>Commit</td><td>012cc164f1c060c667631a832379c0ae42b4417e, branch main</td></tr>
+<tr><td>Chain and address</td><td>Base, 0x5a6ff6033d9b86aab5e00ccc91fd16234118e35a</td></tr>
+<tr><td>Method</td><td>Manual analysis, functional testing, automated testing (Remix IDE, Foundry, Solhint, Mythril, Slither)</td></tr>
+<tr><td>Findings</td><td>0 critical, 0 high, 0 medium, 0 low, 1 informational</td></tr>
+</tbody>
+</table>
+<table class="data">
+<thead><tr><th>No.</th><th>Finding</th><th>Severity</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Compiler version should be fixed: the contract uses the floating pragma ^0.8.28; recommendation to pin 0.8.28</td><td>Informational</td><td>Acknowledged</td></tr>
+</tbody>
+</table>
+<p>On 17 September 2026 Basescan shows the contract source as verified with an exact bytecode match (contract name Konnex, compiler v0.8.28, optimisation enabled with 200 runs). Blockscout's Base explorer shows no verified source for the same address on that date. The GitHub repository named as the source in the report is not publicly accessible on that date, so the audited commit cannot be compared with the deployed bytecode from a public repository; the comparison must be made against the source published on Basescan.</p>
+
+<h2>Commitments before mainnet</h2>
+<table class="data">
+<thead><tr><th>When</th><th>Commitment</th></tr></thead>
+<tbody>
+<tr><td>Before mainnet</td><td>Final-revision re-audit of the release candidate by SlowMist; sign-off is a hard launch gate</td></tr>
+<tr><td>Before bridge activation</td><td>Separate SlowMist audits of the KNX bridge and of the stablecoin bridge; sign-off a hard gate in both cases</td></tr>
+<tr><td>From mainnet</td><td>Live bug bounty</td></tr>
+</tbody>
+</table>
+<p>These commitments were stated in the listing review answer of 12 August 2026. The whitepaper's Phase 1 also lists an external audit of the stake, slash and payout modules, which are not in the April 2026 scope.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>SlowMist audit report 0X002604240001, 23 to 24 April 2026 (3.7_slowmist-audit-konnex-chain-subtensor_2026-04-28_na.pdf), sections 1, 2, 3.2, 3.3, 4.2 and 5.</li>
+<li>QuillAudits smart contract audit report, Konnex, July 2026 (3.7_quillaudits-token-contract-audit_2026-07-20_na.pdf), executive summary, issues summary and informational issues.</li>
+<li>https://basescan.org/address/0x5a6ff6033d9b86aab5e00ccc91fd16234118e35a, accessed 17 September 2026.</li>
+<li>https://base.blockscout.com/api/v2/smart-contracts/0x5a6ff6033d9b86aab5e00ccc91fd16234118e35a, accessed 17 September 2026.</li>
+<li>https://github.com/konnex-world/konnex-chain-subtensor, commit history, accessed 17 September 2026.</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), section 11, Phase 1.</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li>SlowMist security audit, konnex-chain-subtensor runtime, report 0X002604240001, April 2026<span class="fmeta">3.7_slowmist-audit-konnex-chain-subtensor_2026-04-28_na.pdf · na · document opens in the access-controlled deployment</span></li><li>QuillAudits audit of the KNX token contract (Base), July 2026<span class="fmeta">3.7_quillaudits-token-contract-audit_2026-07-20_na.pdf · na · document opens in the access-controlled deployment</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../../assets/room.js"></script></body></html>

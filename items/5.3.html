@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>5.3 Hardware partner list and integration status against the plan · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/5-commercial.html">Section 5 · Commercial</a></div><h1><span class="id">5.3</span> Hardware partner list and integration status against the plan</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">Five hardware counterparties appear in the documents: three enterprise counterparties whose robots are being integrated ahead of mainnet, and two drone companies at MOU-draft stage. On the testnet, three workload classes carry registered validators and miners at the 17 September 2026 snapshot: drone navigation, robot-arm vision-language-action control and SLAM 3D mapping. No hardware root-of-trust integration has been evidenced on a physical device yet; testnet evidence to date is simulator-generated (item 3.3).</p>
+
+<h2>Hardware partners</h2>
+<div class="wrap">
+<table class="data">
+<thead><tr><th>Partner</th><th>Hardware class</th><th>Integration status</th></tr></thead>
+<tbody>
+<tr><td>ReadyMonitor</td><td>Drone docks (drone-in-a-box) and fleet-orchestration software; remote monitoring and BVLOS mission control</td><td>Integrating ahead of mainnet; enterprise counterparty workload (drone navigation); named integration partner</td></tr>
+<tr><td>Exyn Technologies</td><td>Autonomous aerial and ground mapping robots; GPS-denied 3D lidar mapping</td><td>Integrating ahead of mainnet; enterprise counterparty workload (drone navigation and SLAM 3D map)</td></tr>
+<tr><td>Veloce</td><td>Robotic kitchen arm</td><td>Integrating ahead of mainnet; enterprise counterparty workload (robot-arm VLA)</td></tr>
+<tr><td>Anzu Robotics</td><td>Drones (manufacturer)</td><td>MOU drafted December 2025, unsigned; discussion stage</td></tr>
+<tr><td>UAS Nexus</td><td>Drone services; swarm and multi-vehicle coordination</td><td>MOU drafted December 2025, unsigned; discussion stage</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Live testnet workload classes, 17 September 2026</h2>
+<div class="wrap">
+<table class="data">
+<thead><tr><th>Subnet (netuid)</th><th>Workload class</th><th>What runs</th><th class="num">Validators</th><th class="num">Miners</th><th class="num">Active UIDs</th><th>Latest validator publication</th></tr></thead>
+<tbody>
+<tr><td>drone-navigation (4)</td><td>Drone navigation</td><td>OpenFly / Unreal Engine drone navigation with AI miner actions and validator-owned simulator scoring</td><td class="num">3</td><td class="num">253</td><td class="num">1</td><td>22 April 2026</td></tr>
+<tr><td>KonnexVLA (3)</td><td>Robot-arm VLA</td><td>Kitchen-simulator jobs with verifier-owned result scoring</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td>22 April 2026</td></tr>
+<tr><td>KonnexSLAM (5)</td><td>SLAM 3D mapping</td><td>3D mapping jobs with holdout-aware artefact verification</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td>22 April 2026</td></tr>
+</tbody>
+</table>
+</div>
+<p>The other 28 registered networks carry no validators or miners at the snapshot. Emission totals are zero on every subnet. Raw counts, including farming exposure, are in item 5.4; subnet-to-partner dependencies are in item 9.4.</p>
+
+<h2>Mapping of client workloads to subnets</h2>
+<table class="data">
+<thead><tr><th>Subnet</th><th>Client workload</th></tr></thead>
+<tbody>
+<tr><td>drone-navigation</td><td>ReadyMonitor and Exyn Technologies</td></tr>
+<tr><td>robot-arm VLA</td><td>Veloce</td></tr>
+<tr><td>SLAM 3D map</td><td>Exyn Technologies</td></tr>
+</tbody>
+</table>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Exchange due-diligence responses, second round, 29 April 2026 (subnets live on testnet and client mapping).</li>
+<li>Memorandum of Understanding, Konnex and ReadyMonitor, 20 December 2025 (item 5.1); non-binding MOU drafts with Anzu Robotics and UAS Nexus, December 2025.</li>
+<li>Testnet explorer snapshot, 17 September 2026 10:39 UTC, subnet detail for netuids 3, 4 and 5 (data/subnets.json, data/explorer_snapshot.json).</li>
+<li>Subnet documentation: https://docs.testnet.konnex.world/drone-navigation, https://docs.testnet.konnex.world/robokitchen-vla, https://docs.testnet.konnex.world/semantic-slam, accessed 17 September 2026.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

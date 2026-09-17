@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>4.1 Evidence schema and chain of custody from sensor to on-chain artefact · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/4-attestation.html">Section 4 · Attestation and evidence</a></div><h1><span class="id">4.1</span> Evidence schema and chain of custody from sensor to on-chain artefact</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Evidence schema (manifest, hashing, signing) and custody specification from capture to on-chain artefact.</div><p class="lede">A Proof-of-Physical-Work record binds four elements: the signed and content-hashed task instruction, the policy execution trace, the sensor bundle, and the independent validator score. Custody runs from the operator's signed instruction (whose SHA-3 hash is the JobID) through execution and sensor capture, a PoPW bundle submitted against the JobID and deadline, validator verification, and settlement by release or penalty. On the testnet the observable artefact is a validator-built evidence bundle whose canonical JSON is SHA-256 hashed and anchored on chain as a remark extrinsic next to the weight extrinsic; the bundles themselves are simulator runs held off chain.</p>
+
+<h2>The four bound elements</h2>
+<table class="data">
+<thead><tr><th>Element</th><th>Content</th><th>Binding</th></tr></thead>
+<tbody>
+<tr><td>Task instruction</td><td>The job as agreed at issue time: task, place, payload, deadline, reward and deposits</td><td>Signed by the operator, content-hashed, anchored on chain; the packet's SHA-3 hash is the immutable JobID</td></tr>
+<tr><td>Policy execution trace</td><td>The sequence of actions the robot's policy or full stack produced in response to the instruction</td><td>Referenced by JobID; replayable in a deterministic sandbox seeded by the task hash</td></tr>
+<tr><td>Sensor bundle</td><td>Pose, frames, IMU, torque, temperature and other channels required by the subnet's verification function; per the SDK: camera, IMU, torque, thermal; per the whitepaper: video, GPS, IMU, torque, thermal, one small bundle per second</td><td>Signed in hardware at capture where enterprise assurance applies; checked for completeness, time alignment and binding to JobID and deadline</td></tr>
+<tr><td>Independent scoring</td><td>Safety, task match, efficiency and coherence with the instruction and subnet rules</td><td>Produced by validators with no operational stake in the operator; written as a ScoreRoot (pass or fail plus metrics) on chain</td></tr>
+</tbody>
+</table>
+
+<h2>Chain of custody: the settlement flow</h2>
+<table class="data">
+<thead><tr><th>Step</th><th>Actor</th><th>What is recorded</th></tr></thead>
+<tbody>
+<tr><td>1. Offer</td><td>Payer (robot owner or operator)</td><td>Job posted with reward and deadline; on mainnet the fields rewardStable, stakeStable, penaltyStable, deadline and the PoPW requirement bound to the JobID</td></tr>
+<tr><td>2. Bid</td><td>Executors (robots, fleets, AI miners)</td><td>ETA, location and the deposit each is willing to lock</td></tr>
+<tr><td>3. Escrow lock (match)</td><td>Payer and chosen executor</td><td>Escrow and deposits locked on chain; network fee in KNX</td></tr>
+<tr><td>4. Execute</td><td>Executor</td><td>Sensor snapshots recorded per the subnet policy while the task runs; per-step re-scoring against the live sensor stream in the drone and kitchen flows</td></tr>
+<tr><td>5. PoPW submission (prove)</td><td>Executor</td><td>A compact PoPW bundle (sensor log plus short media) referencing the JobID and deadline; SDK command <code>konnex prove --job-id --bundle</code></td></tr>
+<tr><td>6. Verification</td><td>Validators</td><td>Signature, freshness and binding checks; deterministic replay; model audit against ground truth; ScoreRoot published</td></tr>
+<tr><td>7. Release or penalty (settle)</td><td>Contract</td><td>On pass, escrow released to the executor and deposits returned; on fail, executor deposit slashed and payer refunded; failure published on chain</td></tr>
+</tbody>
+</table>
+<p>The settlement flow diagram in this item (<a href="../files/4.1_settlement-flow-diagram_2025-12-16_na.pdf">4.1_settlement-flow-diagram_2025-12-16_na.pdf</a>) shows the same flow with the payer, the stablecoin escrow (rewardStable, stakeStable, penalty, deadline), the executor, the validators posting the ScoreRoot, settlement releasing payouts or refunds, the card on and off-ramp, and the treasury.</p>
+
+<h2>SDK bundle</h2>
+<p>The robot SDK attaches an executor to a subnet with a key file, records telemetry for a job into a PoPW bundle and submits it:</p>
+<table class="data">
+<thead><tr><th>Command</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>konnex robot attach --robot-id … --subnet … --keys./keys.json</code></td><td>Registers the executor identity on the subnet</td></tr>
+<tr><td><code>konnex robot record --job-id JOBID --sensors camera,imu,torque,thermal --out./powp.zip</code></td><td>Streams the four sensor channels for the job into a zip bundle</td></tr>
+<tr><td><code>konnex prove --job-id JOBID --bundle./powp.zip</code></td><td>Submits the bundle reference against the JobID</td></tr>
+</tbody>
+</table>
+<p>Validators tail verify events and run <code>konnex validator verify</code> per event; the illustrative join command declares the evidence channels it will check (gps, imu, video).</p>
+
+<h2>What is observed on the testnet</h2>
+<p>On the drone-navigation subnet the public validator code builds an evidence bundle per round and anchors it as follows. The bundle is a JSON object with version, subnet, netuid, job_id, miner UIDs, validator hotkey, ai_mode, model_name, verifier_mode, input references (instruction, synthetic context, whether a frame was attached), artefact references, the reward and verification arrays, a verdict, per-miner entries (action id, confidence, error, raw response, status code) and a creation timestamp. The bundle is serialised as canonical JSON (sorted keys, no whitespace), SHA-256 hashed, and the hash is published as a <code>system.remark</code> extrinsic signed by the validator wallet in the form <code>konnex-ai-evidence:v1:drone-navigation:&lt;job_id&gt;:&lt;evidence_hash&gt;</code>. The bundle and its files are mirrored to a control-plane API off chain; the weights themselves go on chain in a separate extrinsic.</p>
+<table class="data">
+<thead><tr><th>Subnet</th><th>Artefact files or references in the latest publication (22 April 2026)</th><th>Verifier mode</th><th>On-chain anchors</th></tr></thead>
+<tbody>
+<tr><td>drone-navigation (netuid 4)</td><td>request.json, frame.png, miners_replies.json, scoring.json, metadata.json</td><td>ue_synthetic</td><td>Weights extrinsic and evidence remark extrinsic, both in block; evidence hash 0xef51e2…7ec03</td></tr>
+<tr><td>robokitchen-vla (netuid 3)</td><td>One MP4 result video</td><td>cosmos_warm_eval</td><td>Weights extrinsic and evidence remark extrinsic; evidence hash 0xc0e169…c324af</td></tr>
+<tr><td>semantic-slam (netuid 5)</td><td>manifest.json, overview.svg</td><td>hybrid</td><td>Weights extrinsic and evidence remark extrinsic; evidence hash 0x16baa7…5a6a9</td></tr>
+</tbody>
+</table>
+<p>These bundles are simulator runs: the drone frame is captured by the validator in an Unreal Engine environment, the kitchen run is a simulator episode whose metadata names a Cosmos policy model, and the SLAM publication is a smoke-test round. No device-signed sensor bundle from a physical robot has been published on the explorer to the snapshot date. Where the design places the executor's signed sensor bundle, the testnet currently places a validator-built evidence bundle, and where the design anchors a ScoreRoot per block, the testnet anchors a per-round evidence hash and a weight vector.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>https://docs.konnex.world/understand-konnex/contracts-and-popw, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/sdk/robots and https://docs.konnex.world/sdk/validators, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/stablecoins-integration, accessed 17 September 2026.</li>
+<li>Settlement flow diagram, December 2025 (4.1_settlement-flow-diagram_2025-12-16_na.pdf).</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), sections 7.2, 7.3, 8.2, 8.4, 10.1 and 10.2.</li>
+<li>https://github.com/konnex-world/knx-subnet-drone-navigation, file template/validator/evidence.py, accessed 17 September 2026.</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer/subnets), snapshot 17 September 2026 10:39 UTC: latest_publication metadata for netuids 3, 4 and 5.</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li><a href="../files/4.1_settlement-flow-diagram_2025-12-16_na.pdf">Escrow and settlement flow diagram, December 2025</a><span class="fmeta">4.1_settlement-flow-diagram_2025-12-16_na.pdf · na</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

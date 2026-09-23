@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.1 Architecture specification: Substrate L1, subnet model, consensus · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.1</span> Architecture specification: Substrate L1, subnet model, consensus</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">Konnex runs a Rust and Substrate Layer 1 that is a fork of the Bittensor subtensor runtime: Aura block production at a 12 second target, GRANDPA deterministic finality, and subnets that run Yuma consensus as workload classes for physical AI. The layered design in the whitepaper (mesh, registries, miner markets, verification, economic loop) is the mainnet target; the public testnet exposes the subnet layer, an escrow pallet and on-chain evidence records, with stablecoin settlement and dual staking in build and mesh transport planned.</p>
+
+<h2>The chain as built</h2>
+<p>The testnet node identifies itself on the explorer as <code>Subtensor Node 4.0.0-dev</code> under the chain name Konnex Testnet. The runtime audited by SlowMist in April 2026 is described in the report as a Rust Substrate-based blockchain runtime fork of Bittensor with robotics-native coordination, subnet-aware task execution, escrow settlement, epoch execution and coinbase emission logic. The public repository <code>konnex-world/konnex-chain-subtensor</code> states the same origin.</p>
+<table class="data">
+<thead><tr><th>Property</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Framework</td><td>Rust, Substrate; fork of the Bittensor subtensor runtime</td></tr>
+<tr><td>Block production</td><td>Aura, round-robin authors, 12 second target block time</td></tr>
+<tr><td>Finality</td><td>GRANDPA, deterministic; a finalised block is treated as irreversible under normal operation</td></tr>
+<tr><td>L1 authority set on testnet</td><td>Fixed two-validator Aura and GRANDPA authority set defined at genesis, both operated by Konnex; anyone can run a full node and sync</td></tr>
+<tr><td>Automatic client updates</td><td>None built into the node binary; operators use external tooling</td></tr>
+<tr><td>Cryptography</td><td>Standard Substrate primitives; no bespoke or zero-knowledge cryptography</td></tr>
+<tr><td>Head block at snapshot</td><td class="num">1,073,388 (finalised 1,073,386)</td></tr>
+<tr><td>Networks registered</td><td class="num">31 (root plus 30 subnets), of which 3 have registered validators and miners</td></tr>
+</tbody>
+</table>
+
+<h2>Subnets as workload classes</h2>
+<p>A subnet is a workload class: a commercial pattern (aerial inspection, manipulation, 3D mapping) with its own input schema, scoring function and open miner competition. Subnets run Yuma consensus as inherited from subtensor: subnet validators stake on a subnet and score miner work, and emissions follow stake-weighted validator agreement. Joining subnet consensus is by neuron registration and subnet stake, and is independent of L1 block production. The four-role structure (subnet creators, miners, validators, stakers) is inherited from Bittensor; the differences are the workload (physical actions and artefacts rather than text), the Proof-of-Physical-Work (PoPW) record as the settlement trigger, and, on mainnet, stablecoin-native settlement with dual-staked validators.</p>
+<p>Subnet creation follows a Substrate extrinsic flow: the creator holds the minimum KNX registration stake, defines a manifest (name, workload class, input and output schema, scoring function specification, miner and validator requirements, public code repository), submits the subnet-creation extrinsic which locks the stake and writes the metadata, receives a netuid on finalisation, enables emissions and publishes the miner and validator templates. On testnet the three live subnets were instantiated by the core team.</p>
+<table class="data">
+<thead><tr><th>Netuid</th><th>Subnet</th><th>Workload</th><th>Validators</th><th>Miners</th><th>Active UIDs</th></tr></thead>
+<tbody>
+<tr><td class="num">4</td><td>drone-navigation</td><td>OpenFly and Unreal Engine drone navigation, AI miner actions, validator-owned simulator scoring</td><td class="num">3</td><td class="num">253</td><td class="num">1</td></tr>
+<tr><td class="num">3</td><td>KonnexVLA (robokitchen-vla)</td><td>Kitchen simulator jobs with verifier-owned result scoring</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
+<tr><td class="num">5</td><td>KonnexSLAM (semantic-slam)</td><td>3D mapping jobs with holdout-aware artefact verification</td><td class="num">2</td><td class="num">2</td><td class="num">1</td></tr>
+</tbody>
+</table>
+<p>Counts are from the explorer API snapshot of 17 September 2026. The full register of the 30 subnets, including the 27 registered without participants, is in item 3.5.</p>
+
+<h2>The layered design in the whitepaper</h2>
+<p>The whitepaper (section 8) and the protocol architecture page describe four deterministic layers and one economic loop. Every packet's SHA-3 hash becomes its immutable JobID.</p>
+<table class="data">
+<thead><tr><th>Layer</th><th>Components</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td>Layer 0, Mesh and Gossip</td><td>libp2p and QUIC; channels task.*, bid.*, score.*, proof.*</td><td>Signed JSON intents, bids with ETA and collateral, validator ScoreRoot each block, batched evidence references</td></tr>
+<tr><td>Layer 1, Registry and Smart Contracts</td><td>RobotIdentity, TaskRegistry, StakeVault, BondMatrix, PayoutRouter</td><td>Hardware-secured keys and trust score; stablecoin escrow, deadlines, penalties; dual staking with class-based slashing; third-party bonds; atomic payout</td></tr>
+<tr><td>Layer 2, Intelligence and Motion Markets</td><td>Motion Miners, AI Miners</td><td>Trajectories in a deterministic sandbox (Bullet3D with seeded RNG); perception and planning models as WASM weights or streaming endpoints; composite bids with on-chain fee splits</td></tr>
+<tr><td>Layer 3, Verification and PoPW</td><td>Validator council, deterministic replay (Wasmtime)</td><td>Byte-for-byte replay, model audits against ground truth, PoPW completeness and binding check, single ScoreRoot per block with settlement in the same block</td></tr>
+<tr><td>Economic loop</td><td>Stablecoins and KNX</td><td>Stablecoins for settlement and validator assurance; KNX for security stake, slashing, governance, fees; fee on stablecoin flows swapped to KNX for treasury</td></tr>
+</tbody>
+</table>
+<p>Finality targets stated for the design are under 10 seconds for simulation-only tasks and under 60 minutes with full PoPW evidence.</p>
+
+<h2>Whitepaper components against the testnet</h2>
+<p>The status table below is the one supplied in the second-round technical answers of April 2026, with the explorer observation of September 2026 alongside it.</p>
+<table class="data">
+<thead><tr><th>Whitepaper component</th><th>Status (April 2026 answers)</th><th>Target phase</th><th>Observed on testnet, 17 September 2026</th></tr></thead>
+<tbody>
+<tr><td>Substrate L1 with subnet coordination layer</td><td>Live</td><td>Testnet (Phase 0)</td><td>Chain producing and finalising blocks; 31 networks registered</td></tr>
+<tr><td>Three enterprise-aligned subnets (VLA, manipulation, aerial)</td><td>Live</td><td>Testnet (Phase 0)</td><td>Netuids 3, 4, 5 with registered validators and miners; latest validator weight and evidence publications dated 22 April 2026</td></tr>
+<tr><td>Miner, validator and subnet-creator onboarding via CLI</td><td>Live</td><td>Testnet (Phase 0)</td><td>Public drone subnet repository with miner and validator compose stacks</td></tr>
+<tr><td>Escrow, PoPW verification and on-chain scoring record</td><td>Live</td><td>Testnet (Phase 0)</td><td>konnex-escrow pallet in the audited runtime; evidence hashes published as remark extrinsics alongside weight extrinsics</td></tr>
+<tr><td>Stablecoin escrow and settlement engine</td><td>In build</td><td>Mainnet Phase 1</td><td>Not observed</td></tr>
+<tr><td>Dual staking (KNX and stablecoins) for validators</td><td>In build</td><td>Mainnet Phase 1 (pilot)</td><td>Not observed; testnet stake is testKNX only</td></tr>
+<tr><td>Robot-to-robot smart contracts (cross-robot escrow)</td><td>In build</td><td>Mainnet Phase 1 to 2</td><td>Not observed</td></tr>
+<tr><td>Fiat card on and off-ramp</td><td>Sandboxed</td><td>Mainnet Phase 1 beta</td><td>Not observed</td></tr>
+<tr><td>libp2p and QUIC mesh transport</td><td>Planned</td><td>Mainnet Phase 2</td><td>Not observed</td></tr>
+<tr><td>BondMatrix (third-party stablecoin bonds)</td><td>Planned</td><td>Mainnet Phase 2</td><td>Not observed</td></tr>
+</tbody>
+</table>
+
+<h2>Deltas between the whitepaper design and the deployed chain</h2>
+<p>Three differences matter for a technical reader. First, the whitepaper's verification layer is a validator council with Wasmtime replay of trajectories; the deployed chain uses subtensor's Yuma consensus over validator weight vectors, with per-subnet verification running inside each validator's own node. Second, the whitepaper's TaskRegistry is a stablecoin escrow with PayoutRouter; the deployed runtime carries a <code>konnex-escrow</code> pallet in which a payer funds an escrow with a named set of resolvers, resolvers vote to release, and the payer can refund after the deadline (the pallet's extrinsics <code>fund_escrow</code>, <code>vote_on_escrow</code> and <code>refund_after_deadline</code> are the ones examined in the SlowMist audit). Third, the mesh transport, motion-miner sandbox and BondMatrix exist in the design only.</p>
+
+<h2>Public endpoints</h2>
+<table class="data">
+<thead><tr><th>Endpoint</th><th>URL</th></tr></thead>
+<tbody>
+<tr><td>Block explorer</td><td>https://subnets.testnet.konnex.world/explorer</td></tr>
+<tr><td>Explorer API</td><td>https://testnet-rpc2.konnex.world:30443/api/v1/explorer</td></tr>
+<tr><td>WebSocket RPC</td><td>wss://testnet-rpc1.konnex.world:39944</td></tr>
+<tr><td>Faucet (testKNX)</td><td>https://subnets.testnet.konnex.world/faucet</td></tr>
+<tr><td>Documentation</td><td>https://docs.konnex.world</td></tr>
+</tbody>
+</table>
+
+<h2>Documents in this item</h2>
+<ul>
+<li><a href="../files/3.1_whitepaper-revised-june-2026_2026-06_na.pdf">Konnex whitepaper, revised June 2026</a>: sections 7 to 11 carry the architecture, settlement and roadmap design. Its token figures predate the Token Release Schedule of 17 September 2026; the schedule and the token pages in section 2 of this room govern.</li>
+<li><a href="../files/3.1_protocol-architecture-diagram_2025-12-16_na.pdf">Protocol architecture diagram, December 2025</a>: the target design of the layer stack, reproduced on the protocol architecture page. The as-built runtime is described in the text above.</li>
+</ul>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), sections 2, 8, 9, 10 and 11.</li>
+<li>Protocol architecture diagram, December 2025 (3.1_protocol-architecture-diagram_2025-12-16_na.pdf).</li>
+<li>https://docs.konnex.world/understand-konnex/protocol-architecture, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/design-overview, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/roadmap, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/subnets-workload-classes/subnets, accessed 17 September 2026.</li>
+<li>SlowMist audit report 0X002604240001, 23 to 24 April 2026 (3.7_slowmist-audit-konnex-chain-subtensor_2026-04-28_na.pdf), sections 3.1, 3.2 and 4.2.</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer), snapshot 17 September 2026 10:39 UTC.</li>
+<li>https://github.com/konnex-world/konnex-chain-subtensor, README, accessed 17 September 2026.</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li><a href="../files/3.1_protocol-architecture-diagram_2025-12-16_na.pdf">Protocol architecture diagram, December 2025</a><span class="fmeta">3.1_protocol-architecture-diagram_2025-12-16_na.pdf · na</span></li><li><a href="../files/3.1_whitepaper-revised-june-2026_2026-06_na.pdf">Konnex whitepaper, revised June 2026</a><span class="fmeta">3.1_whitepaper-revised-june-2026_2026-06_na.pdf · na</span> <span class="fmeta">For token allocation figures see item 2.1; this edition predates the Token Release Schedule of 17 September 2026.</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

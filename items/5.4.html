@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>5.4 Testnet activity: live explorer counts by subnet, validator and miner · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/5-commercial.html">Section 5 · Commercial</a></div><h1><span class="id">5.4</span> Testnet activity: live explorer counts by subnet, validator and miner</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">Testnet activity is read live from the public explorer at <a href="https://subnets.testnet.konnex.world/explorer">subnets.testnet.konnex.world/explorer</a>: chain height, registered networks, validators, miners and validator publications per subnet. The figures below are refreshed from the explorer API each time the room is built and carry the time of the snapshot. Counts are as reported by the chain; a cohort analysis net of quest and airdrop participation is prepared separately.</p>
+<h2>What the explorer shows</h2>
+<ul>
+<li>Overview: head and finalized block, total networks, validators and miners across all subnets.</li>
+<li>Subnets: the workload classes with registered participants (drone navigation, robot-arm VLA, SLAM 3D mapping), their UIDs, active UIDs and emission totals.</li>
+<li>Validators and miners: hotkeys, stake, incentive and activity per subnet.</li>
+<li>Publications: each validator's scoring publication with its evidence bundle and verifier mode.</li>
+</ul>
+<section class="sources"><h2>Sources</h2><ul>
+<li>Konnex testnet explorer, https://subnets.testnet.konnex.world/explorer, and its API endpoints (overview, subnets, validators, miners, blocks, activity), read at build time; snapshot time stated in the tables below.</li>
+<li>Explorer counts workbook filed with this item.</li>
+</ul></section>
+<h2>Live testnet snapshot, 2026-09-23 08:30 UTC</h2>
+<p>Read directly from the public explorer API at build time; the explorer itself is at <a href="https://subnets.testnet.konnex.world/explorer">subnets.testnet.konnex.world/explorer</a>. Counts are as reported by the chain; they are not adjusted for quest or airdrop participation.</p>
+<div class="wrap"><table class="data"><thead><tr><th>Measure</th><th class="num">Value</th></tr></thead><tbody>
+<tr><td>Chain</td><td class="num">Konnex Testnet, node Subtensor Node 4.0.0-dev-04ab28ac055</td></tr>
+<tr><td>Head block / finalized</td><td class="num">1,115,942 / 1,115,939</td></tr>
+<tr><td>Observed block time (last 20 blocks)</td><td class="num">12.0 s</td></tr>
+<tr><td>Registered networks</td><td class="num">31 (root plus 30 subnets)</td></tr>
+<tr><td>Subnets with registered participants</td><td class="num">3</td></tr>
+<tr><td>Validators (active)</td><td class="num">8 (3)</td></tr>
+<tr><td>Miners (active)</td><td class="num">257 (0)</td></tr>
+<tr><td>Distinct miner coldkeys</td><td class="num">254</td></tr>
+<tr><td>Total stake (test KNX, raw units)</td><td class="num">780,216,062,025,875</td></tr>
+</tbody></table></div>
+<h3>Per subnet</h3>
+<div class="wrap"><table class="data"><thead><tr><th>Netuid</th><th>Subnet</th><th class="num">UIDs</th><th class="num">Active UIDs</th><th class="num">Validators</th><th class="num">Miners</th><th class="num">Miner coldkeys</th><th class="num">Distinct incentive values</th><th class="num">Emission total</th><th>Last validator publication</th><th>Verifier mode</th></tr></thead><tbody><tr><td>3</td><td>KonnexVLA</td><td class='num'>5</td><td class='num'>1</td><td class='num'>3 (1 active)</td><td class='num'>2 (0 active)</td><td class='num'>2</td><td class='num'>1</td><td class='num'>0.0</td><td>2026-04-22</td><td>cosmos_warm_eval</td></tr><tr><td>4</td><td>drone-navigation</td><td class='num'>256</td><td class='num'>1</td><td class='num'>3 (1 active)</td><td class='num'>253 (0 active)</td><td class='num'>252</td><td class='num'>12</td><td class='num'>0.0</td><td>2026-04-22</td><td>ue_synthetic</td></tr><tr><td>5</td><td>KonnexSLAM</td><td class='num'>4</td><td class='num'>1</td><td class='num'>2 (1 active)</td><td class='num'>2 (0 active)</td><td class='num'>2</td><td class='num'>1</td><td class='num'>0.0</td><td>2026-04-22</td><td>hybrid</td></tr></tbody></table></div>
+<p>Distinct incentive values and distinct coldkeys per subnet indicate how differentiated the miner set is: many miners sharing one incentive value and few coldkeys point to scripted registrations rather than independent operators. Emission total of zero means no subnet emission has been paid on the testnet.</p>
+<h3>Recent extrinsics (last 24 in the activity feed, blocks 1,115,941 to 1,115,945)</h3>
+<div class="wrap"><table class="data"><thead><tr><th>Call</th><th class="num">Count</th></tr></thead><tbody><tr><td>system.remark</td><td class='num'>15</td></tr><tr><td>timestamp.set</td><td class='num'>5</td></tr><tr><td>drand.writePulse</td><td class='num'>2</td></tr><tr><td>subtensorModule.AxonServed</td><td class='num'>1</td></tr><tr><td>subtensorModule.serveAxon</td><td class='num'>1</td></tr><tr><td><b>Signed by a user</b></td><td class="num"><b>16</b></td></tr></tbody></table></div>
+<section class="sources"><h2>Sources</h2><ul><li>Konnex testnet explorer API, overview, subnets, validators, miners, blocks and activity endpoints, accessed 2026-09-23 08:30 UTC.</li></ul></section><h2>Documents</h2><ul class="files"><li><a href="../files/5.4_testnet-raw-counts_r1.xlsx">5.4_testnet-raw-counts_r1.xlsx</a><span class="fmeta">generated working file, revision 1</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

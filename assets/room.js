@@ -1,0 +1,2 @@
+(function(){var s=document.getElementById('qa-search');if(!s)return;var arts=Array.prototype.slice.call(document.querySelectorAll('article.qa'));var c=document.getElementById('qa-count');
+s.addEventListener('input',function(){var q=s.value.trim().toLowerCase();var n=0;arts.forEach(function(a){var hit=!q||a.textContent.toLowerCase().indexOf(q)>=0;a.style.display=hit?'':'none';if(hit)n++;});if(c)c.textContent=n+' of '+arts.length;});})();

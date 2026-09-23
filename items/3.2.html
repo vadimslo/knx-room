@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.2 Validator scoring functions for each live workload class · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.2</span> Validator scoring functions for each live workload class</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Per-workload scoring functions with weights and thresholds for drone navigation, robot-arm VLA and SLAM; values of the metascore coefficients.</div><p class="lede">Scoring on Konnex happens at two levels. Subnet validators score miner work against the task instruction for each workload class (drone navigation, roboarm VLA, SLAM), and the chain scores the validators themselves with a metascore S = αC + βH - γP that rewards agreement with the validator set, accuracy on hidden reference tasks, and clean operation. Inside each validator a VLA or LLM layer and a deterministic layer must agree before a vote is published; if they conflict the validator abstains.</p>
+
+<h2>Validator metascore</h2>
+<p>The chain combines three signals into one scalar per validator, written S(V<sub>i</sub>) for validator i:</p>
+<p><strong>S(V<sub>i</sub>) = α · C(W<sub>i</sub>, W̄) + β · H(V<sub>i</sub>) - γ · P<sub>i</sub></strong></p>
+<table class="data">
+<thead><tr><th>Term</th><th>Meaning</th><th>How it is produced</th></tr></thead>
+<tbody>
+<tr><td>C(W<sub>i</sub>, W̄)</td><td>Consensus alignment: similarity between validator i's weight vector W<sub>i</sub> over a batch of miners or tasks and the network aggregate W̄</td><td>The chain builds W̄ with a governance-tunable rule (median per dimension or a stake-weighted blend); C is a similarity such as cosine mapped to the interval 0 to 1. Systematic drift from W̄ lowers validator trust and effective yield. Pseudorandom hidden spot checks make blind copying of consensus risky.</td></tr>
+<tr><td>H(V<sub>i</sub>)</td><td>Honeypot accuracy: share or count of hidden reference tasks where validator i's grades match the known-good labels</td><td>The network or a governed oracle injects reference runs whose correct grades are known before validators vote (deterministic simulators such as ManiSkill, Isaac Sim or subnet benches). Validators do not know which jobs are honeypots. Awarding a high score to an objectively failed reference draws a hard penalty up to slashing on governance-defined severity tiers.</td></tr>
+<tr><td>P<sub>i</sub></td><td>Operational penalties</td><td>High latency, missed voting epochs, broken commitments and similar slashing-adjacent behaviour.</td></tr>
+<tr><td>α, β, γ</td><td>Positive governance weights</td><td>Set how much each term moves S; tuned per subnet phase and mainnet rollout.</td></tr>
+</tbody>
+</table>
+<p>The metascore does not replace workload-specific scoring: miner rewards and PoPW acceptance still flow from subnet verifiers and task semantics. The metascore governs which validators are trusted to emit those scores and at what economic weight.</p>
+
+<h2>Two-tier validation inside the validator node</h2>
+<p>Each validator's local pipeline is designed as two independent channels that must agree before a vote is safe to publish.</p>
+<table class="data">
+<thead><tr><th>Channel</th><th>Question answered</th><th>Typical checks</th></tr></thead>
+<tbody>
+<tr><td>VLA or LLM layer</td><td>Did the miner follow the instruction semantically?</td><td>Vision-language model or LLM judgement of task match, safety, efficiency and coherence from frames and traces</td></tr>
+<tr><td>Deterministic layer</td><td>Are the physical constraints satisfied?</td><td>Torque limits, timing windows, joint limits, replay deltas against simulator logs, closed-form KPI checks</td></tr>
+</tbody>
+</table>
+<p>Abstention rule: if the two layers conflict, the validator abstains or requests an extended check along a subnet-defined escalation path. Publishing a confident vote despite internal disagreement is scored against the validator under the consensus and honeypot terms.</p>
+
+<h2>What is scored in each live workload class</h2>
+<table class="data">
+<thead><tr><th>Subnet (netuid)</th><th>Task input</th><th>Miner output</th><th>Validator scoring</th><th>Verifier mode on testnet</th></tr></thead>
+<tbody>
+<tr><td>drone-navigation (4)</td><td>Text mission, or a sensor bundle (RGBD plus telemetry); on testnet the validator captures one frame in an Unreal Engine small-city environment (OpenFly) and attaches it with an instruction</td><td>Candidate navigation action sequences from a vision-language navigation policy</td><td>Safety, efficiency, task match and coherence; validator-owned simulator scoring; per-step re-scoring against the live sensor stream during execution; analytical collision heuristics alongside AI scoring</td><td>ue_synthetic; policy model fly-vla</td></tr>
+<tr><td>KonnexVLA, robokitchen-vla (3)</td><td>Natural-language kitchen task prompt with visual or sensor context (KitchenSim arena on testnet)</td><td>Candidate manipulation trajectories from a VLA policy</td><td>Safety (no collisions, stable grasps), task match (correct object, correct action), efficiency (frames or tokens used); verifier-owned result scoring; KPI extraction such as time, success, spills</td><td>cosmos_warm_eval; model nvidia/Cosmos-Policy-RoboCasa-Predict2-2B; MP4 artefact</td></tr>
+<tr><td>KonnexSLAM, semantic-slam (5)</td><td>Sensor stream, live or uploaded RGBD plus telemetry bundle, hashed and registered as a task</td><td>Candidate 3D mesh with semantic labels</td><td>Geometric coverage, mesh fidelity, semantic accuracy against held-out ground truth, runtime efficiency; holdout-aware artefact verification, independent of whoever captured the data</td><td>hybrid; artefacts manifest.json and overview.svg</td></tr>
+</tbody>
+</table>
+<p>Verifier modes and model names are those recorded in the latest evidence metadata on the explorer (publications of 22 April 2026).</p>
+
+<h2>The public reference validator for drone navigation</h2>
+<p>The published drone subnet repository contains the validator scoring that runs on testnet. Each validator round is a single-step query: the validator teleports to a random spot in the Unreal Engine environment, captures one frame, sets the instruction from the spot, and queries miners for one action. Two scorer modes exist, selected by <code>SCORER_MODE</code>:</p>
+<table class="data">
+<thead><tr><th>Mode</th><th>Scoring of one miner response</th></tr></thead>
+<tbody>
+<tr><td>hash (default, described in the code as a local beta proxy)</td><td>0.10 for parseable output; plus 0.20 if the action id is in the allowed set; plus 0.60 if it equals the action expected from a keyword heuristic on the instruction (stop, left, right, strafe, up, down, photo), otherwise plus 0.10; plus 0.10 times the miner's declared confidence. Scores are normalised across miners to sum to one and set as weights.</td></tr>
+<tr><td>api</td><td>Each response is posted to an external scorer service (<code>SCORER_API</code>) and the returned score is used; on failure the response scores zero.</td></tr>
+</tbody>
+</table>
+
+<h2>The AI verifier as documented</h2>
+<p>The documented AI verifier samples about six frames from the execution video (JPEG, width at most 640 pixels), sends them with the task instruction to a vision-capable LLM (gpt-4o-mini in the reference implementation) and requires strict JSON with six integer metrics on a 0 to 100 scale (accuracy, speed, safety, optimal_track, energy_efficiency, trajectory_stability), a holistic final_pct, a verdict of success, failure or inconclusive, and a one-paragraph reasoning. Multiple verifiers are emulated by calling the model three times with different frame subsets or perturbed prompts and taking a per-column average or an LLM consensus as the final row. Validators may substitute local models (an API-based LLM or a local Llama in the April 2026 answers); the on-chain record carries the signed score, not the model identity.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>https://docs.konnex.world/understand-konnex/validator-metascore, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/participate/validating, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/subnets-workload-classes/subnets, /drone-navigation, /roboarm-vla and /slam-3d-map, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/supported-ai-models/verifier, accessed 17 September 2026.</li>
+<li>https://github.com/konnex-world/knx-subnet-drone-navigation, files template/validator/reward.py (commit of 7 August 2026) and README, accessed 17 September 2026.</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer), snapshot 17 September 2026 10:39 UTC: subnet descriptions and latest publication metadata.</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), sections 8.4 and 9.2.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

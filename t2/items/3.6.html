@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.6 Slashing conditions and economic security parameters · Konnex data room</title><link rel="stylesheet" href="../../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../../index.html"><img src="../../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../../index.html" class="">Overview</a><a href="../../items/9.3.html" class="">Q&amp;A log</a><a href="../../tokenomics-rationale.html" class="">Tokenomics</a><a href="../../files.html" class="">Files</a><a href="../../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../../t2/sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.6</span> Slashing conditions and economic security parameters</h1><p><span class="badge b-t2">Tier 2</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Numeric slashing and stake parameters; only symbolic formulas exist.</div><p class="lede">Economic security rests on two stakes with different jobs: a KNX security stake, posted by validators and executors and slashed on protocol and consensus faults, and a stablecoin assurance stake, posted by validators on mainnet, that compensates counterparties for settlement-layer faults such as approving an invalid proof; executors and miners also lock stablecoin deposits per job that are forfeited on a failed or missing proof. Stake sizes scale inversely with the square root of on-chain trust, so untrusted actors post more. The formulas are published; the parameters that give them numbers are governance settings that have not been set.</p>
+
+<h2>Dual stake</h2>
+<table class="data">
+<thead><tr><th>Tranche</th><th>Who posts it</th><th>Purpose</th><th>Slashed or forfeited for</th><th>Goes to</th></tr></thead>
+<tbody>
+<tr><td>KNX security stake</td><td>Validators; executors and AI miners optionally or per subnet rules</td><td>Aligns participants with consensus security; enables slashing; gates validator participation by stake weight</td><td>Protocol and consensus misbehaviour; collusion, fraud, bypassing attestation; unsafe or under-performing code rejected at the simulation gate (miner stake)</td><td>Validator treasury (whitepaper section 9.4)</td></tr>
+<tr><td>Stablecoin assurance stake</td><td>Validators (mainnet)</td><td>Compensates affected parties for settlement-layer faults</td><td>Approving invalid PoPW; missing deadlines; wrongly approving or delaying a decision that causes loss</td><td>The harmed counterparty</td></tr>
+<tr><td>Stablecoin deposit or bond per job</td><td>Executor (robot owner or AI miner); optionally third-party stakers via BondMatrix</td><td>Financial collateral for performance on a specific task</td><td>Missed deadline; bad or missing proof; failed PoPW</td><td>The payer (refund plus penalty)</td></tr>
+</tbody>
+</table>
+<p>Both validator tranches scale with on-chain trust. Locked or unvested KNX cannot be staked and does not earn rewards.</p>
+
+<h2>Formulas from the whitepaper</h2>
+<table class="data">
+<thead><tr><th>Quantity</th><th>Formula</th><th>Symbols</th></tr></thead>
+<tbody>
+<tr><td>Validator KNX stake</td><td>S<sub>KNX</sub>(v) = α / √T<sub>v</sub></td><td>T<sub>v</sub> validator trust score; α governance parameter</td></tr>
+<tr><td>Validator stablecoin stake</td><td>S<sub>stable</sub>(v) = β / √T<sub>v</sub></td><td>β governance parameter</td></tr>
+<tr><td>Executor stablecoin collateral</td><td>S<sub>stable</sub>(exec) = κ / √T<sub>e</sub></td><td>T<sub>e</sub> executor trust score; κ a market or risk-class parameter</td></tr>
+<tr><td>Trust-weighted payout</td><td>R<sub>i</sub> = (T<sub>i</sub> / Σ<sub>j</sub> T<sub>j</sub>) · P</td><td>P the stablecoin pool for the job; T<sub>i</sub> participant trust</td></tr>
+<tr><td>Validator metascore</td><td>S(V<sub>i</sub>) = α · C + β · H - γ · P<sub>i</sub></td><td>See item 3.2; the α and β here are separate governance weights from the stake-sizing α and β above</td></tr>
+</tbody>
+</table>
+<p>The intended effect is collateral efficiency: a clean record raises T and lowers the required deposit, while a poor record raises it. The whitepaper's key metrics for the settlement layer include a dispute rate under 1 percent of jobs resolved without human intervention.</p>
+
+<h2>Settlement rules that apply the penalties</h2>
+<table class="data">
+<thead><tr><th>Event</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr><td>PoPW passes</td><td>Escrowed stablecoins released to the executor; deposits returned; a small fee on the stablecoin flow is swapped to KNX and routed to treasury; network fees paid in KNX</td></tr>
+<tr><td>PoPW fails, or proof missing</td><td>penaltyStable applied from the executor's stake, then from third-party bonds, capped at the total stake; payer refunded; failure published on chain</td></tr>
+<tr><td>Missed deadline</td><td>Executor loses its stablecoin deposit; hirer keeps the reward</td></tr>
+<tr><td>Validator wrongly approves or delays</td><td>Validator's stablecoin assurance stake compensates the harmed party; KNX stake slashed if the fault is a consensus or protocol fault</td></tr>
+<tr><td>Miner fails the simulation gate</td><td>Code rejected; miner stake slashed before deployment</td></tr>
+</tbody>
+</table>
+<p>The reference settlement contract sketch on the stablecoins page carries two rate settings, a fee on the executor payout and a yield to third-party bond providers, with owner-settable caps; the whitepaper describes the fee only as small. The rate stated to a listing review in August 2026 for stablecoin settlement flows at launch was 0.01 percent (1 basis point), with a separate bridge withdrawal fee to be fixed at launch, and fees routed to a single on-chain protocol treasury contract.</p>
+
+<h2>What runs on the testnet</h2>
+<p>The testnet stakes testKNX only. Validators are stake-weight gated with KNX staking and weight aggregation follows the Yuma model inherited from subtensor. The audited runtime contains the <code>konnex-escrow</code> pallet: a payer funds an escrow naming its resolvers; a strict majority of resolvers releases; the payer refunds after the deadline; resolver votes after the deadline are rejected (added in remediation of finding N7); settled escrows are removed from storage (finding N8). Stablecoin escrow, the assurance tranche and BondMatrix are Phase 1 and Phase 2 items on the roadmap.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), sections 7.3, 7.4, 7.10, 8.4, 8.5, 9.1, 9.2, 9.4 and 10.3.</li>
+<li>https://docs.konnex.world/understand-konnex/protocol-architecture, accessed 17 September 2026.</li>
+<li>https://docs.konnex.world/understand-konnex/stablecoins-integration, accessed 17 September 2026 (settlement flow and reference contract sketch).</li>
+<li>https://docs.konnex.world/participate/validating, accessed 17 September 2026.</li>
+<li>SlowMist audit report 0X002604240001, April 2026 (3.7_slowmist-audit-konnex-chain-subtensor_2026-04-28_na.pdf), findings N2, N7 and N8.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../../assets/room.js"></script></body></html>

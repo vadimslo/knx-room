@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>2.1 The live TRS model: the working file, not a screenshot · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/2-token.html">Section 2 · Token structure</a></div><h1><span class="id">2.1</span> The live TRS model: the working file, not a screenshot</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge b-token">TOKEN</span> <span class="badge s-ready">Filed</span></p><p class="lede">The canonical model is Token Release Schedule, dated 17 September 2026, filed in the room as a working Excel file rather than a picture of one. It carries 1,000,000,000 KNX across 17 pockets, a monthly unlock grid from the TGE working date to T+84, and the InvestorInsiders and Monetary Policy tabs that exchange templates require.</p>
+
+<h2>The workbook in the room</h2>
+<p>File: <code>Token Release Schedule (working model), 17 September 2026</code>, three sheets.</p>
+<table class="data">
+<thead><tr><th>Sheet</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td>Token Release Schedule</td><td>Header (rows 2 to 10): project, ticker, TGE date, supply. Pocket block (rows 12 to 26): labels, purpose, vesting wallet address, wallet control, "hardcoded in smart contract" flag, token allocation, checker, percentage of supply, token price, amount raised, valuation, vesting text, tradeable-at-TGE row, vesting day. Grid (rows 28 to 113): KNX unlocked per pocket per month, T+0 (genesis) to T+84, with a "thereafter" row; circulating supply, circulating %, incremental supply per month in columns T to W. Totals and checks (rows 114 to 115).</td></tr>
+<tr><td>InvestorInsiders Breakdown</td><td>Full cap table by holder (rows 8 to 17): date, round, cost per token, holder, tokens, allocation %, FDV, amount raised, receiving address; checker rows link back to the master tab. Team and advisor tables (rows 22 to 40) read "to be filed when resolved (room item 8.1)". Top-10 holder table placeholders.</td></tr>
+<tr><td>Monetary Policy</td><td>Template definitions of monetary-policy and emission types, plus the KNX declaration for Schedule: fixed supply of 1,000,000,000 KNX with decreasing issuance under a hard annual cap that steps down 15% a year, actual issuance the lesser of the cap and a usage-linked formula.</td></tr>
+</tbody>
+</table>
+
+<h2>Header facts</h2>
+<table class="data">
+<thead><tr><th>Field</th><th>Value in the schedule</th></tr></thead>
+<tbody>
+<tr><td>Project, ticker</td><td>Konnex, KNX</td></tr>
+<tr><td>Total supply at genesis; max supply</td><td>1,000,000,000 KNX; 1,000,000,000 KNX (no minting beyond the cap)</td></tr>
+<tr><td>Current circulating supply</td><td>0 (pre-TGE)</td></tr>
+<tr><td>TGE date (T)</td><td>Target Q3 2027, model working date 15 September 2027</td></tr>
+<tr><td>Vesting day</td><td>15th of each month</td></tr>
+<tr><td>Unlocked at TGE</td><td>77,000,000 KNX, 7.70% of max supply</td></tr>
+<tr><td>Hardcoded in smart contract</td><td>"No" for every pocket; vesting is to be enforced through a third-party provider and per-pocket multisigs, to be fixed before TGE</td></tr>
+</tbody>
+</table>
+
+<h2>Circulating supply checkpoints</h2>
+<p>Cumulative unlocked supply from the schedule grid (column T). The emissions pocket contributes only the scheduled amounts under the cap; 224,584,668 KNX of the 430,000,000 pool remain beyond T+84 as a ceiling, which is why circulating supply at T+84 is 77.54% rather than 100%.</p>
+<table class="data">
+<thead><tr><th>Checkpoint</th><th>Date</th><th class="num">Circulating (KNX)</th><th class="num">% of supply</th><th>Sources of the step</th></tr></thead>
+<tbody>
+<tr><td>T+0 (TGE)</td><td>15 Sep 2027</td><td class="num">77,000,000</td><td class="num">7.70%</td><td>Marketing 40,000,000; liquidity 30,000,000; airdrop 5,000,000; treasury 1,000,000; foundation 1,000,000</td></tr>
+<tr><td>T+12</td><td>15 Sep 2028</td><td class="num">144,800,000</td><td class="num">14.48%</td><td>Marketing linear from T+1; emissions from T+4 (36,000,000 in the first year); treasury linear from T+7</td></tr>
+<tr><td>T+24</td><td>15 Sep 2029</td><td class="num">393,700,000</td><td class="num">39.37%</td><td>Legacy investors, new round and foundation from T+13; team from T+14; emissions cap year 2</td></tr>
+<tr><td>T+36</td><td>15 Sep 2030</td><td class="num">627,480,000</td><td class="num">62.75%</td><td>New round, marketing, treasury and foundation fully released</td></tr>
+<tr><td>T+48</td><td>15 Sep 2031</td><td class="num">685,958,000</td><td class="num">68.60%</td><td>Team complete at T+38; legacy investors and emissions continue</td></tr>
+<tr><td>T+60</td><td>15 Sep 2032</td><td class="num">736,014,300</td><td class="num">73.60%</td><td>Legacy investor vesting complete</td></tr>
+<tr><td>T+84</td><td>15 Sep 2034</td><td class="num">775,415,332</td><td class="num">77.54%</td><td>Emissions only from T+61; remainder of the pool is a ceiling, not scheduled supply</td></tr>
+</tbody>
+</table>
+
+<h2>Generated unlock grid</h2>
+<p>The generated workbook <code>2.1_unlock-grid_r1.xlsx</code> reproduces the schedule grid from parameters rather than pasted values. Inputs holds each pocket's total, TGE amount, linear start and end month and monthly amount, plus the emissions cap (48,000,000 KNX in year 1, 15% step-down). Grid computes the monthly unlock per pocket by formula for T+0 to T+84, with monthly total, circulating supply and percentage; Cumulative shows the per-pocket running totals. Check compares the formula output with the schedule circulating figures at T+0, T+12, T+24, T+36, T+48, T+60 and T+84 and every pocket total through T+84; all differences are below 1 KNX. Notes records two conventions taken from the schedule grid rather than its vesting text: the Foundation linear release runs T+13 to T+36 (text reads M12 to M36) and the Team release runs T+14 to T+38 at 2,000,000 KNX per month (text reads M13 to M38).</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Token Release Schedule, 17 September 2026 (files/2.1_token-release-schedule_2026-09-17_na.xlsx): sheet Token Release Schedule, header rows 2 to 10, pocket rows 12 to 26, grid rows 28 to 115, cell comments C4, Q12, C17, K17, P17, R17, C21, L28, K113; sheet InvestorInsiders Breakdown; sheet Monetary Policy, cell B20</li>
+<li>Generated workbook 2.1_unlock-grid_r1.xlsx, sheets Inputs, Grid, Cumulative, Check, Notes</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li><a href="../files/2.1_token-release-schedule_2026-09-17_na.xlsx">Token Release Schedule (working model), 17 September 2026</a><span class="fmeta">2.1_token-release-schedule_2026-09-17_na.xlsx · na</span></li><li><a href="../files/2.1_unlock-grid_r1.xlsx">2.1_unlock-grid_r1.xlsx</a><span class="fmeta">generated working file, revision 1</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

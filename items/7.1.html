@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>7.1 Liability allocation framework: who is responsible when an attestation is wrong · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/7-legal.html">Section 7 · Legal and regulatory</a></div><h1><span class="id">7.1</span> Liability allocation framework: who is responsible when an attestation is wrong</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">The protocol allocates the cost of a wrong or missed attestation by construction rather than by contract: the payer's stablecoins sit in escrow with the payee, amount and deadline fixed at funding; the executor's stake and any third-party bond fund the penalty on a fail; validators post a KNX security stake that is slashed for protocol faults and a stablecoin assurance stake that compensates users for settlement-layer faults; independent resolvers decide outcomes and can only release or refund. This page describes the mainnet design as published in the June 2026 whitepaper, the protocol documentation and the answers given to a listing review. It is a description of protocol mechanics for mainnet, not a legal allocation of liability; mainnet is pre-launch.</p>
+
+<div class="notice">Protocol design for mainnet. Escrow, penalties, dual staking and resolver settlement are roadmap items; the documentation states that inter-robot smart contracts with native stablecoin escrow are not guaranteed in the first public testnet build. Mainnet follows TGE, target Q3 2027 (model working date 15 September 2027).</div>
+
+<h2>Parties and what each puts at risk</h2>
+<table class="data">
+<thead><tr><th>Party</th><th>Role</th><th>Capital at risk</th><th>Loses it when</th></tr></thead>
+<tbody>
+<tr><td>Payer</td><td>Posts the job with reward and deadline; funds the escrow in stablecoins</td><td>rewardStable, escrowed in the task contract</td><td>The task passes verification: the reward is released to the executor less protocol fee and bond yield. On a fail the full reward escrow is refunded to the payer.</td></tr>
+<tr><td>Executor (robot, fleet or AI miner)</td><td>Performs the task, records sensor evidence, submits the PoPW bundle before the deadline</td><td>stakeStable (stablecoin bond); on mainnet also a KNX stake that aligns executors with validator security</td><td>The task fails verification, the deadline is missed or the proof is bad: penaltyStable is taken from the executor's stake first and paid to the payer; the KNX stake is slashable for misconduct.</td></tr>
+<tr><td>Third-party bond providers</td><td>Supply stablecoins to robotic bond pools backing an executor, priced by reputation</td><td>Bonded stablecoins</td><td>The task fails and the penalty exceeds the executor's own stake: the remainder is slashed pro rata from the bonds. On a pass they receive principal plus a yield carved from the reward.</td></tr>
+<tr><td>Validators</td><td>Verify the PoPW bundle (deterministic replay, model audit, binding to the signed job) and publish a pass or fail with metrics (ScoreRoot)</td><td>Dual stake: a KNX security stake and a stablecoin assurance stake, both scaling with on-chain trust</td><td>KNX security stake is slashed for protocol or consensus misbehaviour. Stablecoin assurance stake compensates affected parties for settlement-layer faults: approving an invalid PoPW, or wrongly approving or delaying a decision that causes loss.</td></tr>
+<tr><td>Protocol treasury</td><td>Receives a fee on successful payouts in stablecoin through a fee collector for KNX buyback or treasury use</td><td>Nothing at risk in the flow</td><td>Fees are not distributed to KNX holders; KNX carries no dividend, revenue share or redemption right.</td></tr>
+</tbody>
+</table>
+
+<h2>Escrow fields</h2>
+<p>Every task carries a minimum set of fields fixed when the payer funds the escrow: rewardStable (the gross reward escrowed by the payer), stakeStable (the executor's stake or bond), penaltyStable (the amount applied on a fail, funded from stake and bonds), deadline (the last time for proof submission) and a PoPW requirement bound to the signed JobID. Three settlement types are supported: fixed-price (a single amount released on success), metered (usage-based debits from the escrow by the payer during execution, capped at the escrow) and milestone (staged releases across checkpoints). The payee address, the amount and the deadline cannot be changed by anyone after funding.</p>
+
+<h2>Pass flow</h2>
+<ol>
+<li>Lock: the payer funds the on-chain stablecoin escrow; the executor's stake is transferred to the contract, either directly or through third-party bonds.</li>
+<li>Perform: the executor records sensor evidence (pose, frames, IMU, torque, temperature and other channels required by the subnet); where enterprise assurance applies, critical telemetry is signed in hardware before it reaches the host operating system.</li>
+<li>Prove: the executor submits the PoPW bundle reference bound to the JobID and the deadline.</li>
+<li>Verify: independent validators publish a ScoreRoot recording pass and metrics.</li>
+<li>Settle: on pass, bond yield is carved from the gross reward and paid pro rata to bond providers, the protocol fee is taken from the remainder and sent to the fee collector, the executor receives the net payout and its direct stake back, and any unspent escrow (the metered remainder) is refunded to the payer. Network fees are paid in KNX.</li>
+</ol>
+
+<h2>Fail flow</h2>
+<ol>
+<li>A fail is recorded when verification fails, the deadline passes without proof, or the proof is bad or missing; validators publish the failure on-chain.</li>
+<li>penaltyStable is applied, capped at the total stake: first from the executor's direct stake, then pro rata from third-party bonds, and paid to the payer.</li>
+<li>The full reward escrow is refunded to the payer.</li>
+<li>Any remaining executor stake is returned to the executor; remaining bond principal is returned to bond providers without yield.</li>
+<li>If the validator decision was itself wrong or late and caused loss, the validator's stablecoin assurance stake compensates the harmed party; the validator's KNX security stake is slashed for protocol faults such as collusion, fraud or bypassing attestation.</li>
+</ol>
+
+<h2>Resolvers, administrative limits and the pause guardian</h2>
+<ul>
+<li>Non-custodial: no third party has custody of or control over escrowed stablecoins at any point; escrow and settlement run entirely on-chain in the settlement module covered by the SlowMist audit of April 2026 (item 3.7).</li>
+<li>Three operations only: fund; release on a strict majority of independent resolvers; refund after the deadline. The only two outcomes are release to the payee fixed at funding or refund to the payer. Resolvers vote on an outcome but never hold or receive funds, and cannot redirect funds to another address, alter the amount or take the funds.</li>
+<li>Deadlock protection: if resolvers deadlock or never act, the payer recovers the funds after the deadline with no action from Konnex.</li>
+<li>No administrative function can move escrowed funds (SlowMist authority-control check passed). A pause guardian can halt new escrows in a security emergency but cannot move, seize or reassign funds, and the refund path stays open while paused.</li>
+<li>Upgrades are timelocked with public advance notice.</li>
+</ul>
+
+<h2>Stablecoin issuer powers and edge parties</h2>
+<ul>
+<li>Stablecoin issuers (Circle, Tether) retain freeze and blacklist powers over their own tokens in response to sanctions or lawful orders; this applies to those assets globally and sits outside Konnex's control.</li>
+<li>Approved bridge routes deliver stablecoins to the user's own address before any escrow exists; a fiat on-ramp processor, if used, mints stablecoins to the payer's address and never touches escrow.</li>
+<li>Optional KYC and AML gates can be set per market or contract (an access controller checked at lock and bond); the network itself is permissionless.</li>
+</ul>
+
+<h2>Stake sizing</h2>
+<p>Required stakes are trust-adjusted: the executor's stablecoin stake follows S = κ / √T, where T is the executor's trust score and κ a market or risk-class parameter; validator stakes follow S(KNX) = α / √T and S(stable) = β / √T with α and β set by governance. Collateral requirements therefore fall as an honest record accumulates. The slashing conditions and the values of κ, α and β are covered in item 3.6.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>3.1_whitepaper-revised-june-2026_2026-06_na.pdf, sections 7.2 to 7.4, 8.4, 8.5 and 10.1 to 10.3</li>
+<li>https://docs.konnex.world/understand-konnex/contracts-and-popw, accessed 17 September 2026 (PoPW elements, hardware-rooted provenance, economic finality, roadmap scope note, job flow)</li>
+<li>https://docs.konnex.world/understand-konnex/stablecoins-integration, accessed 17 September 2026 (settlement types, task fields, PoPW-linked settlement, robotic bonds, compliance by design, KonnexSettlementManager lock, bond, prove, debitMetered and settle functions)</li>
+<li>3.7_slowmist-audit-konnex-chain-subtensor_2026-04-28_na.pdf, authority-control check</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

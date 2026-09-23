@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>5.2 Pricing and take rate on stablecoin settlement, with unit economics by task type · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/5-commercial.html">Section 5 · Commercial</a></div><h1><span class="id">5.2</span> Pricing and take rate on stablecoin settlement, with unit economics by task type</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">Task settlement on Konnex is stablecoin-native: payers escrow stablecoins, executors are paid in stablecoins on verified completion, and the protocol takes a fee on the settlement flow that is swapped into KNX for the treasury. The fee parameters are under design. Three rates appear across Konnex documents, from 1 basis point to 50 basis points, and one rate will be fixed before mainnet.</p>
+
+<h2>Fee parameters</h2>
+<p>The protocol fee on stablecoin settlement is 50 bps (0.50%) of the executor payout, collected by the fee collector contract and swapped into KNX for the treasury. Third-party bond providers who post assurance stake on an executor's behalf receive a bond yield of 25 bps (0.25%) carved from the gross reward. Network gas is paid in KNX. These are the contract-level parameters of the stablecoin settlement design published at docs.konnex.world.</p>
+<div class="wrap"><table class="data"><thead><tr><th>Parameter</th><th class="num">Rate</th><th>Applied to</th><th>Recipient</th></tr></thead><tbody>
+<tr><td>Stable fee</td><td class="num">50 bps (0.50%)</td><td>Executor payout on a verified task</td><td>Fee collector contract; swapped into KNX for the treasury</td></tr>
+<tr><td>Bond yield</td><td class="num">25 bps (0.25%)</td><td>Gross reward, when third-party bonds back the executor</td><td>Bond providers, pro rata</td></tr>
+<tr><td>Bridge withdrawal fee</td><td class="num">1 to 10 bps</td><td>Withdrawals through the KNX bridge</td><td>Protocol treasury; final level fixed at launch</td></tr>
+</tbody></table></div>
+<h2>Other charges in the design</h2>
+<table class="data">
+<thead><tr><th>Charge</th><th>Denomination</th><th>Statement</th></tr></thead>
+<tbody>
+<tr><td>Network fees for Proof-of-Physical-Work validation, contract processing and state transitions</td><td>KNX</td><td>Charged in KNX after mainnet; settlement itself stays in stablecoins</td></tr>
+<tr><td>Bridge withdrawal fee</td><td>Stablecoin or KNX, per bridge</td><td>1 to 10 basis points, final level fixed at launch</td></tr>
+<tr><td>Penalties on failed tasks</td><td>Stablecoin</td><td>A stablecoin penalty is applied to the executor and refunds are processed; network fees remain in KNX</td></tr>
+<tr><td>AI-model royalties</td><td>On-chain, per deployment</td><td>Developers earn royalties whenever their control policies are deployed on robots; rails provided by the protocol, rate not stated</td></tr>
+</tbody>
+</table>
+
+<h2>Illustrative splits in the whitepaper</h2>
+<p>The whitepaper contains one worked split, in the 2033 bridge-inspection scenario of §3.3: a lead robot wins a macro-contract and splits it into micro-tasks with a 60/35/5 fee split between lead, worker and AI provider. Payouts to executors are trust-weighted in stablecoins (§8.5: each executor's share is its trust score over the sum of trust scores, times the pool). These are design illustrations of how a task's value is divided among participants; they are not the protocol's take rate.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>docs.konnex.world, Understand Konnex, Stablecoins integration (mainnet design), sections PoPW-Linked Settlement and Penalties, Economics and Fee Flywheel, Solidity Contracts; accessed 17 September 2026 (https://docs.konnex.world/understand-konnex/stablecoins-integration).</li>
+
+<li>Konnex whitepaper, revised June 2026, §3.3, §4.1, §4.2, §5.2, §7.1, §7.3, §7.9, §8.5, §9.3.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

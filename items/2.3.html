@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>2.3 Emissions design memo: schedule, and how issuance responds to demand · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/2-token.html">Section 2 · Token structure</a></div><h1><span class="id">2.3</span> Emissions design memo: schedule, and how issuance responds to demand</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge b-token">TOKEN</span> <span class="badge s-ready">Filed</span></p><p class="lede">Emissions are paid from a pre-minted pool of 430,000,000 KNX (43.00% of supply), not from inflation: total supply never exceeds 1,000,000,000 KNX. Release starts at T+4 under a hard annual cap of 48,000,000 KNX in the first year that steps down 15% each year, and actual issuance is the lesser of that cap and a usage-linked formula paying KNX per verified attested task, with the per-task rate halving annually. What is not issued under the cap stays in the pool as a ceiling; it is not scheduled supply.</p>
+
+<h2>Schedule</h2>
+<table class="data">
+<thead><tr><th>Parameter</th><th>design</th></tr></thead>
+<tbody>
+<tr><td>Pool</td><td>430,000,000 KNX (43.00%), held in the emissions Safe on Base, 0% at TGE</td></tr>
+<tr><td>Start</td><td>T+4 in the model, after mainnet activation; mainnet is gated on a re-audit sign-off of the release candidate</td></tr>
+<tr><td>Annual cap</td><td>48,000,000 KNX in year 1, then each year's cap is 85% of the prior year's cap</td></tr>
+<tr><td>Actual issuance</td><td>The lesser of the cap and the usage-linked formula: KNX per verified attested task, halving annually</td></tr>
+<tr><td>Modelled release</td><td>4,000,000 KNX per month T+4 to T+12 (36,000,000 in year 1, nine months of the 48,000,000 cap); from T+13 the cap for each year divided by twelve, per month</td></tr>
+<tr><td>Recipients</td><td>Miners for verified physical work and validators for scoring and security, distributed within each subnet by the consensus mechanism, so rewards follow stake-weighted validator agreement on miner output</td></tr>
+<tr><td>Locked tokens</td><td>Locked and unvested tokens cannot be staked and earn no emissions</td></tr>
+<tr><td>Beyond T+84</td><td>224,584,668 KNX of the pool remain after the seven years modelled; only issuable under the cap and the usage formula, a ceiling rather than a schedule</td></tr>
+</tbody>
+</table>
+
+<h2>Cap by year</h2>
+<p>The cap is the maximum that can be issued in the year; the modelled column is what the schedule grid schedules, which is the cap except in year 1, where release begins at T+4. Years run from the TGE working date, so year 1 is T+1 to T+12.</p>
+<table class="data">
+<thead><tr><th>Year</th><th>Months</th><th class="num">Annual cap (KNX)</th><th class="num">Monthly at cap (KNX)</th><th class="num">Modelled in the schedule (KNX)</th><th class="num">Cumulative modelled (KNX)</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>T+1 to T+12 (release from T+4)</td><td class="num">48,000,000</td><td class="num">4,000,000</td><td class="num">36,000,000</td><td class="num">36,000,000</td></tr>
+<tr><td class="num">2</td><td>T+13 to T+24</td><td class="num">40,800,000</td><td class="num">3,400,000</td><td class="num">40,800,000</td><td class="num">76,800,000</td></tr>
+<tr><td class="num">3</td><td>T+25 to T+36</td><td class="num">34,680,000</td><td class="num">2,890,000</td><td class="num">34,680,000</td><td class="num">111,480,000</td></tr>
+<tr><td class="num">4</td><td>T+37 to T+48</td><td class="num">29,478,000</td><td class="num">2,456,500</td><td class="num">29,478,000</td><td class="num">140,958,000</td></tr>
+<tr><td class="num">5</td><td>T+49 to T+60</td><td class="num">25,056,300</td><td class="num">2,088,025</td><td class="num">25,056,300</td><td class="num">166,014,300</td></tr>
+<tr><td class="num">6</td><td>T+61 to T+72</td><td class="num">21,297,855</td><td class="num">1,774,821</td><td class="num">21,297,855</td><td class="num">187,312,155</td></tr>
+<tr><td class="num">7</td><td>T+73 to T+84</td><td class="num">18,103,177</td><td class="num">1,508,598</td><td class="num">18,103,177</td><td class="num">205,415,332</td></tr>
+<tr><td class="num">8</td><td>T+85 to T+96</td><td class="num">15,387,700</td><td class="num">1,282,308</td><td class="num">beyond the grid</td><td class="num"></td></tr>
+</tbody>
+</table>
+<p>Two arithmetic consequences of the parameters. Second, a cap that falls 15% a year converges: summed without limit it reaches 48,000,000 / 0.15 = 320,000,000 KNX, or 308,000,000 KNX on the schedule grid with its nine-month first year, so roughly 122,000,000 KNX of the 430,000,000 pool cannot be issued unless the cap parameters are changed through governance. This bound is arithmetic on the stated parameters.</p>
+
+<h2>How issuance responds to demand</h2>
+<p>Issuance is bounded above by the cap and is driven below the cap by verified work: the usage-linked formula pays KNX per verified attested task, and the per-task rate halves each year. A network verifying few tasks issues less than the cap; a network verifying many tasks issues the cap and no more. The parameters of the formula (the initial KNX per task, the definition of a verified attested task and the halving date) are not yet published.</p>
+<p>Demand for KNX is created on the other side of the ledger by functions that require KNX to be held or spent while task settlement stays in stablecoins. Each is a design statement from the whitepaper or the; the pre-TGE ERC-20 carries none of these functions, which activate at mainnet or in later protocol phases.</p>
+<table class="data">
+<thead><tr><th>Function</th><th>Design statement</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Validator staking</td><td>Validators stake KNX to operate and earn rewards, subject to slashing for misbehaviour</td><td>Activates at mainnet</td></tr>
+<tr><td>Miner collateral</td><td>AI miners stake KNX as collateral to publish models</td><td>Activates at mainnet</td></tr>
+<tr><td>Network fees</td><td>Fees for proof-of-physical-work validation, contract processing and state transitions are paid in KNX</td><td>After mainnet</td></tr>
+<tr><td>Buyback flywheel</td><td>A fee on stablecoin settlement flows is converted into KNX and routed to the treasury for burn or re-staking; designed to be automated on-chain after mainnet; no buyback or burn has occurred</td><td>Not live</td></tr>
+<tr><td>Executor bonding</td><td>Robot operators may post KNX bonds alongside stablecoin collateral once bonding is activated</td><td>Not live</td></tr>
+<tr><td>Governance</td><td>Voting weight proportional to stake on emissions and reward parameters, subnet registration, fees and runtime upgrades, once on-chain governance is activated</td><td>Not live; the development team holds upgrade authority pre-mainnet</td></tr>
+</tbody>
+</table>
+<p>The Monetary Policy tab declares the token as fixed supply with decreasing issuance and states that protocol revenue is directed to open-market buy-and-burn from TGE. The fee that feeds the buyback is the 50 bps (0.50%) stable fee on executor payouts.</p>
+
+<h2>Why a declining, usage-linked cap</h2>
+<p>the schedule replaces that with a cap that falls on a clock and an issuance rule that only reaches the cap when verified work supports it, so the supply released to miners and validators tracks the work the network actually attests rather than the calendar alone.</p>
+
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Token Release Schedule, 17 September 2026 (files/2.1_token-release-schedule_2026-09-17_na.xlsx): sheet Token Release Schedule, cells K17, K24, K113 and their comments, grid rows 32 to 113 column K, row 16; sheet Monetary Policy, cell B20</li>
+<li>Konnex whitepaper, revised June 2026 (files/3.1_whitepaper-revised-june-2026_2026-06_na.pdf), §5.1 Supply, §5.2 Token utility, §7.9 Economics and fee flywheel</li>
+<li>Generated workbook 2.1_unlock-grid_r1.xlsx, Inputs rows 6 to 9 and Grid column for emissions</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

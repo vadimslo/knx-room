@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.5 Mainnet roadmap with the subnets, dependencies and dates · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.5</span> Mainnet roadmap with the subnets, dependencies and dates</h1><p><span class="badge b-t1">Tier 1</span> <span class="badge s-ready">Filed</span></p><p class="lede">The roadmap runs in three stages without calendar dates: the current public testnet (Substrate L1, faucet, three workload subnets with end-to-end task flow and on-chain PoPW records), Phase 1 mainnet economics and enterprise settlement (stablecoin escrow, dual stake, hardened registries), and Phase 2 scale-out (mesh transport, robot-to-robot contracts, bridges and ramps). TGE target Q3 2027 (model working date 15 September 2027). Mainnet launch is gated on audit sign-off of the release candidate, with no private mainnet phase.</p>
+
+<h2>Stages as published</h2>
+<table class="data">
+<thead><tr><th>Stage</th><th>Theme</th><th>Technical focus</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr><td>Testnet (current)</td><td>Verifiable core</td><td>Public chain, faucet-issued test KNX, three subnets (drone navigation, roboarm VLA, SLAM 3D map), PoPW-backed task flow, published binaries, reference miners and validators in open source</td><td>Anyone can post a task and inspect on-chain activity; not implied complete against the whitepaper (no mainnet stablecoin settlement, no full dual staking, no mesh transport, no inter-robot contract marketplace)</td></tr>
+<tr><td>Phase 1</td><td>Stablecoin layer</td><td>Escrow, payouts and penalties in stablecoins; fiat-peg UX for tasks and SLAs</td><td>Enterprises budget without holding volatile tokens</td></tr>
+<tr><td>Phase 1</td><td>Dual stake</td><td>KNX for consensus security, stablecoin assurance for settlement-layer faults, governance-tuned parameters</td><td>Compensation paths for provable settlement errors</td></tr>
+<tr><td>Phase 1</td><td>Registries and contracts</td><td>Hardened task registry, identity and payout routers</td><td>B2B integrations and composability</td></tr>
+<tr><td>Phase 2</td><td>Mesh transport</td><td>libp2p-style participation for edge robots without a single cloud choke point</td><td>Broader geographic and tactical reach</td></tr>
+<tr><td>Phase 2</td><td>Robot-to-robot contracts</td><td>On-chain hiring between machines with stablecoin deposits and enforcement</td><td>Fleets contract with each other with minimal human operations</td></tr>
+<tr><td>Phase 2</td><td>Cross-chain and ramps</td><td>Approved bridges, optional fiat and crypto ramps</td><td>Liquidity and invoicing options for operators</td></tr>
+</tbody>
+</table>
+<p>Cross-cutting tracks run throughout: migration of commercial pilots from off-chain telemetry to on-chain PoPW; programmatic billing tied to verified usage; SDKs and tooling for new workload classes; SLA-grade RPC, reliability, identity and compliance options for enterprises; and RL and VLA pipeline research with lab partners.</p>
+
+<h2>Whitepaper phases, relative timing</h2>
+<p>The whitepaper states phases relative to each other rather than to dates, and records that the Phase 0 objectives were achieved on the functional subnet testnet launched 25 April 2026.</p>
+<table class="data">
+<thead><tr><th>Phase</th><th>Window</th><th>Headline deliverables</th></tr></thead>
+<tbody>
+<tr><td>Phase 0, TestNet Sprint</td><td>0 to 6 months</td><td>3D sandbox arenas with a deterministic simulation gate wired to PoPW review; testnet settlement engine with escrow, penalty and payout flows; draft dual-staking and slashing taxonomy; PoPW validator model draft with ScoreRoot emission; SDK v0.9; starter bounties for first miners</td></tr>
+<tr><td>Phase 1, MainNet MVP</td><td>6 to 12 months</td><td>Task-schema v1.0 freeze; external audit of stake, slash and payout modules; validator council genesis and dual-stake pilot; stablecoin mainnet settlement with fee auto-swap to KNX; first physical pilots with simulation parity; card on-ramp beta in a limited region; validator accuracy SLA and dispute rate under 1 percent</td></tr>
+<tr><td>Phase 2, Industrial Pilot</td><td>12 to 24 months</td><td>Warehouse and agriculture trials; PoPW sensor set extended to IMU and LiDAR with data-availability hash anchors; BondMatrix v1; fee splitting for swarm tasks and composite bids; KYC and AML toggles; production cross-chain routes; developer grants wave 1</td></tr>
+<tr><td>Phase 3, Global Motion Ledger</td><td>24 to 48 months</td><td>Sensor-agnostic PoPW v3; on-chain royalty contracts for trajectory packs; card settlement at scale; governance-refined dual-staking parameters and regional assurance pools</td></tr>
+</tbody>
+</table>
+
+<h2>Launch gates</h2>
+<table class="data">
+<thead><tr><th>Gate</th><th>Condition</th></tr></thead>
+<tbody>
+<tr><td>TGE</td><td>Target Q3 2027 (model working date 15 September 2027)</td></tr>
+<tr><td>Mainnet</td><td>Final-revision re-audit of the release candidate by SlowMist, with sign-off as a hard launch gate; public launch, no private mainnet phase</td></tr>
+<tr><td>Bridge activation</td><td>Separate SlowMist audits of the KNX bridge and the stablecoin bridge, sign-off a hard gate in both cases</td></tr>
+<tr><td>From mainnet</td><td>Live bug bounty</td></tr>
+<tr><td>Validator set at mainnet</td><td>Pre-launch; validator-set details to be confirmed before launch</td></tr>
+</tbody>
+</table>
+
+<h2>Subnet register on the testnet</h2>
+<p>The explorer registers 31 networks (root plus the 30 below). Three subnets have registered validators and miners; the remaining 27 are registered names without participants, for which the explorer returns no participant data. Counts are from the explorer API snapshot of 17 September 2026 10:39 UTC. Hardware partners behind the three live subnets are mapped in item 9.4.</p>
+<table class="data">
+<thead><tr><th>Netuid</th><th>Name</th><th>Status</th><th>Validators</th><th>Miners</th><th>Active UIDs</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>apex</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">2</td><td>KonnexNavigation</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">3</td><td>KonnexVLA</td><td>Live (registered validators and miners)</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
+<tr><td class="num">4</td><td>drone-navigation</td><td>Live (registered validators and miners)</td><td class="num">3</td><td class="num">253</td><td class="num">1</td></tr>
+<tr><td class="num">5</td><td>KonnexSLAM</td><td>Live (registered validators and miners)</td><td class="num">2</td><td class="num">2</td><td class="num">1</td></tr>
+<tr><td class="num">6</td><td>Phone LiDAR Objects Scan</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">7</td><td>Sensor Fusion Edge</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">8</td><td>Phone Photogrammetry Outdoor</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">9</td><td>Prosthetic Socket 3D</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">10</td><td>Photogrammetry Mesh CAD</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">11</td><td>Media Forensics</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">12</td><td>Long Horizon Memory</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">13</td><td>Buke Net</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">14</td><td>Smart Home Robotics</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">15</td><td>Hardware Wear Health</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">16</td><td>Vacuum Smart Nav</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">17</td><td>Revopoint Metrology Scan</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">18</td><td>Intraoral Scan Align</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">19</td><td>Additive 3D Print</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">20</td><td>Lidar SLAM Core</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">21</td><td>Consumer Lidar Home</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">22</td><td>Construction BIM Scan</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">23</td><td>Tactile Gripper Wear</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">24</td><td>Quadruped Robot Dog</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">25</td><td>Physical Task Verify</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">26</td><td>Motor Thermal Degradation</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">27</td><td>Dental Prosthesis CAD</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">28</td><td>Orthotic Brace 3D</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">29</td><td>Gaussian Splat Walkthrough</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">30</td><td>Video Photo Analysts</td><td>Registered, no participants</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+</tbody>
+</table>
+<p>Registered network-level totals at the snapshot: 8 validators and 257 miners across the three live subnets; emission totals on every subnet read zero; the latest validator weight and evidence publications are dated 22 April 2026 on all three live subnets.</p>
+
+<h2>Phased plan with dates</h2>
+<p>The operating plan of September 2026 sets four phases against the listing target of Q3 2027. Each phase is defined by what must be true before the next one starts, not by a calendar alone.</p>
+<div class="wrap"><table class="data"><thead><tr><th>Phase</th><th>Period</th><th>Gate</th><th>Content</th></tr></thead><tbody>
+
+<tr><td>Phase 1</td><td>January to June 2027</td><td>A physical Proof-of-Physical-Work record on the public chain and paid third-party work against it</td><td>Trusted-execution-environment signed capture on three device classes; 10,000 attested tasks across three customer sites in one regulated vertical; published dispute and false-positive rates with methodology; three to five paid pilots at USD 50,000 to USD 150,000 each; one insurer or broker quote priced against a Konnex record; a versioned Universal Task Language specification with two OEM implementations, or the claim withdrawn; sybil pass with published methodology before the airdrop snapshot; market maker engaged on a retainer six weeks before listing.</td></tr>
+<tr><td>Phase 2</td><td>Q3 2027</td><td>Listing priced at or near the round price</td><td>Token generation event (model working date 15 September 2027); buy-and-burn of protocol revenue live from the first block, published monthly; stake-gated work routing for validators and fleet operators; venue sequencing against real volume; monthly scoreboard from month one.</td></tr>
+<tr><td>Phase 3</td><td>2028 to 2029</td><td>Burn exceeds emissions before the investor vest completes</td><td>Pilots to production contracts: base case 105 paying customers and 18,500 attesting robots across three verticals; each featured mainnet subnet launches only with a named paying counterparty; base case emissions at 0.7 times the burn in 2029; portable operating records and machine-cashflow financing against verified uptime.</td></tr>
+</tbody></table></div>
+<section class="sources"><h2>Sources</h2><ul>
+<li>https://docs.konnex.world/understand-konnex/roadmap, accessed 17 September 2026.</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), section 11 (Roadmap).</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer/overview and /subnets), snapshot 17 September 2026 10:39 UTC.</li>
+<li>Room register (index.json), TGE text: target Q3 2027 (model working date 15 September 2027).</li>
+<li>Konnex operating plan, September 2026 (phases 0 to 3).</li></ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>3.8 Node and validator client repositories, release history, contributor list · Konnex data room</title><link rel="stylesheet" href="../../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../../index.html"><img src="../../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../../index.html" class="">Overview</a><a href="../../items/9.3.html" class="">Q&amp;A log</a><a href="../../tokenomics-rationale.html" class="">Tokenomics</a><a href="../../files.html" class="">Files</a><a href="../../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../../t2/sections/3-protocol.html">Section 3 · Protocol and technical</a></div><h1><span class="id">3.8</span> Node and validator client repositories, release history, contributor list</h1><p><span class="badge b-t2">Tier 2</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Reviewer access to the private repositories under NDA; release tags; contributor list.</div><p class="lede">Four public repositories sit under github.com/konnex-world: the chain runtime (a Bittensor subtensor fork), the chain SDK (a Bittensor SDK fork), the drone-navigation subnet with its miner and validator stacks, and a robot gateway fork of OpenClaw. Active development, code review and CI run on a private GitLab; GitHub carries production-ready code after internal review, and reviewer access to the private repositories is offered under a mutual NDA. On the testnet the explorer shows 8 registered subnet validators and 257 registered miners across the three live subnets, while L1 block production remains with the two genesis validators operated by Konnex.</p>
+
+<h2>Public repositories</h2>
+<table class="data">
+<thead><tr><th>Repository</th><th>Language</th><th>Licence</th><th>Upstream</th><th>Last commit</th><th>Tags or releases</th></tr></thead>
+<tbody>
+<tr><td>konnex-chain-subtensor</td><td>Rust</td><td>Unlicense</td><td>Bittensor subtensor (opentensor/subtensor)</td><td>27 April 2026 (audit remediation n7 to n9); last push 7 August 2026</td><td>None</td></tr>
+<tr><td>konnex-chain-sdk</td><td>Python</td><td>MIT</td><td>Bittensor SDK (opentensor/bittensor)</td><td>29 July 2025 (PoPW facade and status normalisation); last push 7 August 2026</td><td>None</td></tr>
+<tr><td>knx-subnet-drone-navigation</td><td>Python</td><td>MIT</td><td>Bittensor subnet template; OpenFly-Platform as a git submodule</td><td>14 August 2026 (probe hardening: loopback bind, env-only wallet)</td><td>None</td></tr>
+<tr><td>knx-openclaw</td><td>TypeScript</td><td>MIT</td><td>OpenClaw (formerly Clawdbot) AI gateway</td><td>24 March 2026 (KonnexClaw README and robot bridge command surface); last push 7 August 2026</td><td>None</td></tr>
+</tbody>
+</table>
+<p>The GitHub contributor lists of the two chain repositories carry the upstream Bittensor history (72 listed contributors on the runtime fork, at least 100 on the SDK fork) and are not a measure of Konnex engineering headcount. Konnex-specific commits on GitHub are authored under the Chief Technology Officer's account, consistent with the stated model in which GitHub reflects release cycles rather than daily development. The SDK README links to the development GitLab at git.konnex.world.</p>
+
+<h2>What each repository contains</h2>
+<table class="data">
+<thead><tr><th>Repository</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td>konnex-chain-subtensor</td><td>Node, pallets and consensus-integrated runtime logic, including the konnex-escrow pallet and the coinbase and epoch code covered by the SlowMist audit; Docker and localnet compose files; hyperparameters document</td></tr>
+<tr><td>konnex-chain-sdk</td><td>Python SDK keeping Bittensor compatibility (wallet, subtensor and subnet queries, extrinsics) with Konnex network profiles, task-scoped operations and PoPW status normalisation layered on top</td></tr>
+<tr><td>knx-subnet-drone-navigation</td><td>subnet-miner and subnet-validator packages, an Unreal Engine sidecar (openfly-ue), an assets bootstrap, compose stacks for miner and validator, validator scoring (SCORER_MODE hash or api) and evidence publication (canonical JSON bundle, SHA-256 hash, remark extrinsic)</td></tr>
+<tr><td>knx-openclaw</td><td>Fork of the OpenClaw gateway to run a local-first AI agent on a robot with MCP tool servers for camera, drive, arm and IO control</td></tr>
+</tbody>
+</table>
+<p>The roboarm VLA and SLAM subnet code, the explorer, the control plane and the KNX token contract are not in the public repositories. The documentation site links to a GitHub organisation named konnex-network, which does not exist; the code is under konnex-world.</p>
+
+<h2>Private development and reviewer access</h2>
+<p>The node software is not fully open source: production-ready code is published to GitHub after internal review and testing, and active development with code review and CI runs on the private GitLab. Reviewer access to the private repositories is offered to counterparties under a mutual NDA on request. The node binary has no built-in automatic update mechanism; operators are expected to track releases with their own tooling.</p>
+
+<h2>Operators on the testnet</h2>
+<table class="data">
+<thead><tr><th>Role</th><th>Count at snapshot</th><th>Attribution</th></tr></thead>
+<tbody>
+<tr><td>L1 block validators (Aura and GRANDPA authority set)</td><td class="num">2</td><td>Both operated by Konnex, defined at genesis</td></tr>
+<tr><td>Registered subnet validators (netuids 3, 4, 5)</td><td class="num">8</td><td>Hotkeys only; the explorer does not attribute hotkeys to operators</td></tr>
+<tr><td>Registered subnet miners (netuids 3, 4, 5)</td><td class="num">257</td><td>Hotkeys only; 253 of them on drone-navigation</td></tr>
+<tr><td>Active UIDs</td><td class="num">1 per live subnet</td><td>Latest weight publications of 22 April 2026 each assign weight to one UID</td></tr>
+</tbody>
+</table>
+<p>Four ecosystem validator organisations were named as onboarded in the July 2026 questionnaire answers: Zana Ventures, 21RoundTable, Wild Sage Labs and Team Rizzo AI. Which registered hotkeys belong to them is not visible on the explorer.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>https://api.github.com/users/konnex-world/repos and the per-repository commits, tags, releases and contributors endpoints, accessed 17 September 2026.</li>
+<li>README files of konnex-world/konnex-chain-subtensor, konnex-chain-sdk, knx-subnet-drone-navigation and knx-openclaw, accessed 17 September 2026.</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer), snapshot 17 September 2026 10:39 UTC.</li>
+<li>https://docs.konnex.world/ and https://docs.konnex.world/sdk/validators, accessed 17 September 2026 (GitHub organisation link).</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../../assets/room.js"></script></body></html>

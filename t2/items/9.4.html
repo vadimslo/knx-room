@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>9.4 Dependency map: which subnets rely on which hardware partners · Konnex data room</title><link rel="stylesheet" href="../../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../../index.html"><img src="../../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · rev 1 · Confidential</span></div><nav><a href="../../index.html" class="">Overview</a><a href="../../items/9.3.html" class="">Q&amp;A log</a><a href="../../tokenomics-rationale.html" class="">Tokenomics</a><a href="../../files.html" class="">Files</a><a href="../../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../../t2/sections/9-risk.html">Section 9 · Risk</a></div><h1><span class="id">9.4</span> Dependency map: which subnets rely on which hardware partners</h1><p><span class="badge b-t2">Tier 2</span> <span class="badge s-partial">Filed, partial</span></p><div class="prep"><b>In preparation.</b> Subnet-to-hardware-partner dependency map.</div><p class="lede">The three live subnets each map to a named hardware partner: drone-navigation to ReadyMonitor's drone-in-a-box docks and to Exyn Technologies' autonomous aerial systems, roboarm VLA to Veloce's robot kitchen arms, and SLAM to Exyn's mapping robots. Exyn therefore sits behind two of the three live subnets, and drone-navigation is the only subnet with two partners. The other 27 subnets registered on the testnet have no partner recorded.</p>
+
+<h2>Live subnets and their hardware partners</h2>
+<table class="data">
+<thead><tr><th>Netuid</th><th>Subnet</th><th>Hardware partner</th><th>Partner hardware</th><th>Workload the partner brings</th><th>Testnet device state</th></tr></thead>
+<tbody>
+<tr><td class="num">4</td><td>drone-navigation</td><td>ReadyMonitor</td><td>Drone-in-a-box docks and the ReadyMonitor Cloud command centre for multi-site monitoring</td><td>Text-mission inspection flights (fly to a structure, photograph the roof) producing an auditable inspection record for utilities, insurers and industrial operators</td><td>Physical or simulated drone via the hardware link page; published evidence is simulator-generated</td></tr>
+<tr><td class="num">4</td><td>drone-navigation</td><td>Exyn Technologies</td><td>Autonomous aerial systems for indoor and GPS-denied environments (mining, construction, industrial scanning)</td><td>Autonomous flight, with sensor bundles (RGBD plus telemetry) feeding 3D reconstruction</td><td>Live stream or uploaded pre-recorded bundle; published evidence is simulator-generated</td></tr>
+<tr><td class="num">3</td><td>KonnexVLA (robokitchen-vla)</td><td>Veloce</td><td>Autonomous kitchen robot arms; eight pasta recipes using different equipment, ingredients and timings</td><td>Natural-language kitchen tasks executed by a VLA policy, with a per-order record that the robot executed the instruction</td><td>Physical arm in deployment; simulator on testnet</td></tr>
+<tr><td class="num">5</td><td>KonnexSLAM (semantic-slam)</td><td>Exyn Technologies</td><td>Mapping robots producing RGBD and telemetry streams</td><td>3D map generation and semantic SLAM with provenance of the returned map</td><td>Uploaded bundles; the latest publication is a smoke-test round</td></tr>
+</tbody>
+</table>
+<p>Subnet numbering in the April 2026 answers (subnets 1 to 3) is by workload; the netuids above are the on-chain identifiers from the explorer.</p>
+
+<h2>Dependency structure</h2>
+<table class="data">
+<thead><tr><th>Partner</th><th>Subnets depending on it</th><th>What the network loses without it</th><th>Documented relationship</th></tr></thead>
+<tbody>
+<tr><td>Exyn Technologies</td><td>drone-navigation (4), semantic-slam (5)</td><td>The only source of real GPS-denied flight and mapping sensor data; the SLAM subnet has no other partner</td><td>Client relationship stated in the whitepaper and the questionnaire answers (item 5.1)</td></tr>
+<tr><td>ReadyMonitor</td><td>drone-navigation (4)</td><td>The inspection-mission use case and the dock fleet; the drone subnet keeps Exyn's flight workload</td><td>Memorandum of understanding, 20 December 2025, exploratory and non-binding except confidentiality, IP, publicity and miscellaneous clauses (5.1_readymonitor-mou_2025-12-20_counterparty-signed.pdf)</td></tr>
+<tr><td>Veloce</td><td>KonnexVLA (3)</td><td>The only physical manipulation partner; the VLA subnet would run on simulators alone</td><td>Client relationship stated in the whitepaper and the questionnaire answers (item 5.1)</td></tr>
+</tbody>
+</table>
+<p>Two of the three partners have been disclosed as related parties of the President; the disclosure is in item 1.5. The commercial status of each relationship and the integration plan are in items 5.1 and 5.3.</p>
+
+<h2>Registered subnets without a partner recorded</h2>
+<p>Netuids 1, 2 and 6 to 30 (apex, KonnexNavigation, Phone LiDAR Objects Scan, Sensor Fusion Edge, Phone Photogrammetry Outdoor, Prosthetic Socket 3D, Photogrammetry Mesh CAD, Media Forensics, Long Horizon Memory, Buke Net, Smart Home Robotics, Hardware Wear Health, Vacuum Smart Nav, Revopoint Metrology Scan, Intraoral Scan Align, Additive 3D Print, Lidar SLAM Core, Consumer Lidar Home, Construction BIM Scan, Tactile Gripper Wear, Quadruped Robot Dog, Physical Task Verify, Motor Thermal Degradation, Dental Prosthesis CAD, Orthotic Brace 3D, Gaussian Splat Walkthrough, Video Photo Analysts) are registered on the testnet without participants and have no hardware partner recorded in any document. The full register with counts is in item 3.5.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Memorandum of understanding between Konnex and ReadyMonitor, 20 December 2025 (5.1_readymonitor-mou_2025-12-20_counterparty-signed.pdf), sections 1 to 4.</li>
+<li>Konnex whitepaper, revised June 2026 (3.1_whitepaper-revised-june-2026_2026-06_na.pdf), section 4.1 (enterprise clients).</li>
+<li>Konnex testnet explorer API (testnet-rpc2.konnex.world:30443/api/v1/explorer), snapshot 17 September 2026 10:39 UTC: subnet register and latest publication metadata.</li>
+<li>https://docs.konnex.world/subnets-workload-classes/subnets, accessed 17 September 2026.</li>
+</ul></section>
+</main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 1, 2026-09-17. Canonical model: Token Release Schedule of 17 September 2026. TGE target Q3 2027 (model working date 15 September 2027).</footer>
+<script src="../../assets/room.js"></script></body></html>

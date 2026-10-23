@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>2.1 Token Release Schedule · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · Revision 2 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/2-token.html">Section 2 · Token structure</a></div><h1><span class="id">2.1</span> Token Release Schedule</h1><p class="lede">The canonical model is the Token Release Schedule dated 19 October 2026, filed in the room as a working Excel file rather than a picture of one. It carries 1,000,000,000 KNX across 18 pockets, a monthly unlock grid from the TGE working date to T+60, and the InvestorInsiders and Monetary Policy tabs that exchange templates require; a generated grid extends the schedule to T+84.</p>
+
+<h2>The workbook in the room</h2>
+<p>File: <code>Token Release Schedule (working model), 19 October 2026</code>, three sheets.</p>
+<table class="data">
+<thead><tr><th>Sheet</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td>Token Release Schedule</td><td>Header (A1 to A3): round summary and open items. Pocket block (rows 4 to 11): pocket labels in row 4 (columns C to J legacy investors, K new round main close, L top-up close, M KOLpad allocations, N emissions, O marketing, P treasury, Q Foundation, R team, S liquidity, T airdrop), notes, USD committed, price per token, tokens allocated, percentage of supply, TGE unlock and vesting text. Grid (header row 14, rows 15 to 75): KNX unlocked per pocket per month, T+0 to T+60, with circulating supply in column U and circulating % in column V. Summary block (X4 to Y27): existing holders, new round tokens, amount raised, blended price, FDV at the blended price, investors as a percentage of supply, supply check, TGE circulating, KOLpad tokens, emissions pocket and the KOLpad allocation arithmetic (X17 to X27). Emissions cap by year (AA4 to AB12) and the day-one float itemization (AA14 to AB21).</td></tr>
+<tr><td>InvestorInsiders Breakdown</td><td>Cap table by holder (rows 8 to 18): equity (row 8), pre-seed (row 9), six seed holders (rows 10 to 15), KOL round (row 16), new round main close (row 17) and top-up close (row 18), with date, round, cost per token, holder, tokens, allocation %, FDV, amount raised and receiving address; investor wallets read "Held in tier 2". Checker rows 20 and 21 link back to the master tab. Team rows 24 to 26 and advisor rows 39 and 40.</td></tr>
+<tr><td>Monetary Policy</td><td>Template definitions of monetary-policy and emission types, plus the KNX declaration in cell B20: fixed supply of 1,000,000,000 KNX with decreasing issuance under a hard annual cap that steps down 15% a year, actual issuance the lesser of the cap and a usage-linked formula, and 100% of protocol revenue to open-market buy-and-burn from TGE.</td></tr>
+</tbody>
+</table>
+
+<h2>Header facts</h2>
+<table class="data">
+<thead><tr><th>Field</th><th>Value in the schedule</th></tr></thead>
+<tbody>
+<tr><td>Project, ticker</td><td>Konnex, KNX</td></tr>
+<tr><td>Total supply at genesis; max supply</td><td>1,000,000,000 KNX; 1,000,000,000 KNX (fixed, no minting beyond the cap)</td></tr>
+<tr><td>Current circulating supply</td><td>0 (pre-TGE)</td></tr>
+<tr><td>TGE date (T)</td><td>Target Q1 2027 (model working date 5 February 2027)</td></tr>
+<tr><td>Vesting day</td><td>5th of each month</td></tr>
+<tr><td>Unlocked at TGE</td><td>53,000,000 KNX, 5.30% of max supply</td></tr>
+<tr><td>Listing reference</td><td>USD 0.20, set at listing</td></tr>
+<tr><td>New round</td><td>195,000,000 KNX (19.50%) for USD 32,000,000: main close 175,000,000 KNX at USD 0.16 and top-up close 20,000,000 KNX at USD 0.20; blended USD 0.1641</td></tr>
+</tbody>
+</table>
+
+<h2>Circulating supply checkpoints</h2>
+<p>Cumulative unlocked supply from the schedule grid (column U) to T+60 and from the generated grid at T+84. The emissions pocket contributes only the scheduled amounts under the cap; 279,584,668 KNX of the 485,000,000 pocket remain beyond T+84 as a ceiling, which is why circulating supply at T+84 is 72.04% rather than 100%.</p>
+<table class="data">
+<thead><tr><th>Checkpoint</th><th>Date</th><th class="num">Circulating (KNX)</th><th class="num">% of supply</th><th>Sources of the step</th></tr></thead>
+<tbody>
+<tr><td>T+0 (TGE)</td><td>5 Feb 2027</td><td class="num">53,000,000</td><td class="num">5.30%</td><td>Marketing 35,000,000 (venue 1 25,000,000; venue 2 6,000,000; decentralized-exchange pool 4,000,000); market-maker loan 10,000,000; airdrop 5,000,000; KOLpad 3,000,000</td></tr>
+<tr><td>T+1</td><td>5 Mar 2027</td><td class="num">59,500,000</td><td class="num">5.95%</td><td>KOLpad 6,000,000; marketing 500,000</td></tr>
+<tr><td>T+2</td><td>5 Apr 2027</td><td class="num">66,000,000</td><td class="num">6.60%</td><td>KOLpad 6,000,000, all 15,000,000 released; marketing 500,000</td></tr>
+<tr><td>T+6</td><td>5 Aug 2027</td><td class="num">80,000,000</td><td class="num">8.00%</td><td>Emissions from T+4 at 4,000,000 a month; marketing 500,000 a month</td></tr>
+<tr><td>T+12</td><td>5 Feb 2028</td><td class="num">117,000,000</td><td class="num">11.70%</td><td>Treasury linear from T+7; emissions 36,000,000 in the first year</td></tr>
+<tr><td>T+13</td><td>5 Mar 2028</td><td class="num">134,441,667</td><td class="num">13.44%</td><td>Legacy investors, new round and Foundation from T+13; emissions cap year 2</td></tr>
+<tr><td>T+24</td><td>5 Feb 2029</td><td class="num">348,300,000</td><td class="num">34.83%</td><td>Team from T+14 at 2,000,000 a month</td></tr>
+<tr><td>T+36</td><td>5 Feb 2030</td><td class="num">572,480,000</td><td class="num">57.25%</td><td>Marketing complete at T+30; new round, treasury and Foundation complete at T+36</td></tr>
+<tr><td>T+48</td><td>5 Feb 2031</td><td class="num">630,958,000</td><td class="num">63.10%</td><td>Team complete at T+38; legacy investors and emissions continue</td></tr>
+<tr><td>T+60</td><td>5 Feb 2032</td><td class="num">681,014,300</td><td class="num">68.10%</td><td>Legacy investor vesting complete</td></tr>
+<tr><td>T+84</td><td>5 Feb 2034</td><td class="num">720,415,332</td><td class="num">72.04%</td><td>Emissions only from T+61; remainder of the pocket is a ceiling, not scheduled supply</td></tr>
+</tbody>
+</table>
+
+<h2>Generated unlock grid</h2>
+<p>The generated workbook <code>2.1_unlock-grid_r2.xlsx</code> reproduces the schedule grid from parameters rather than pasted values and runs it to T+84. Inputs holds each pocket's total, TGE amount, linear start and end month and monthly amount, plus the emissions cap (48,000,000 KNX in year 1, 15% step-down). Grid computes the monthly unlock per pocket by formula for T+0 to T+84, with monthly total, circulating supply and percentage; Cumulative shows the per-pocket running totals. Check compares the formula output with the schedule circulating figures at T+0, T+12, T+24, T+36, T+48, T+60 and T+84 and every pocket total through T+84; all differences are below 1 KNX. Notes records the conventions of the grid: T+0 is the TGE working date with vesting on the 5th of each month, the KOLpad allocations release 20% at TGE and 40% at each of T+1 and T+2, and the team release runs T+14 to T+38 at 2,000,000 KNX per month with nothing at T+13.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Token Release Schedule, 19 October 2026 (files/2.1_token-release-schedule_2026-10-19_na.xlsx): sheet Token Release Schedule, header A1 to A3, pocket rows 4 to 11, grid rows 14 to 75 (circulating columns U and V), summary block X4 to Y27, emissions cap AA4 to AB12, day-one float AA14 to AB21; sheet InvestorInsiders Breakdown, rows 8 to 21, 24 to 26, 39 and 40; sheet Monetary Policy, cell B20</li>
+<li>Generated workbook 2.1_unlock-grid_r2.xlsx, sheets Inputs, Grid, Cumulative, Check, Notes</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li><a href="../files/2.1_token-release-schedule_2026-10-19_na.xlsx">Token Release Schedule (working model), 19 October 2026</a><span class="fmeta">2.1_token-release-schedule_2026-10-19_na.xlsx · na</span></li><li><a href="../files/2.1_unlock-grid_r2.xlsx">2.1_unlock-grid_r2.xlsx</a><span class="fmeta">generated working file, revision 2</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 2, 2026-10-19. Canonical model: Token Release Schedule of 19 October 2026. TGE target Q1 2027 (model working date 5 February 2027).</footer>
+<script src="../assets/room.js"></script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>2.4 Unlocks and sell pressure · Konnex data room</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header class="top"><div class="brand"><a href="../index.html"><img src="../assets/lockup-white.png" alt="Konnex"></a><span>Data room · USD 32M round · Revision 2 · Confidential</span></div><nav><a href="../index.html" class="">Overview</a><a href="../items/9.3.html" class="">Q&amp;A log</a><a href="../tokenomics-rationale.html" class="">Tokenomics</a><a href="../files.html" class="">Files</a><a href="../t2/index.html" class="">Tier 2</a></nav></header>
+<main><div class="meta"><a href="../sections/2-token.html">Section 2 · Token structure</a></div><h1><span class="id">2.4</span> Unlocks and sell pressure</h1><p class="lede">The sell-pressure model puts each month's unlock from the schedule against reference prices and a projected 30-day spot volume. At the main close price of USD 0.16 the TGE float of 53,000,000 KNX (5.30%) is worth USD 8,480,000 (USD 10,600,000 at the USD 0.20 listing reference) and contains no investor tokens; the first investor unlock at T+13 adds 17,441,667 KNX (USD 2,790,667) in a single month, of which 8,125,000 KNX is the new round and 2,083,333 KNX the legacy holders. Volume is an input the model does not supply: the projected 30-day volume cell is blank and marked INPUT REQUIRED.</p>
+
+<h2>The workbook</h2>
+<p>File: <code>2.4_sell-pressure_r2.xlsx</code>, four sheets.</p>
+<table class="data">
+<thead><tr><th>Sheet</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td>Inputs</td><td>Price scenarios: main close USD 0.16, listing reference USD 0.20, and the legacy effective prices (pre-seed USD 0.0968, seed USD 0.1716, KOL round USD 0.2194). Projected 30-day spot volume, blank and marked INPUT REQUIRED. Total supply.</td></tr>
+<tr><td>Unlocks</td><td>Monthly unlock in KNX for each of ten classes (legacy investors, new round, KOLpad, emissions, marketing, treasury, Foundation, team, liquidity, airdrop), T+0 to T+84, from the schedule grid; monthly total, cumulative circulating supply and percentage of supply as formulas.</td></tr>
+<tr><td>Model</td><td>Per month: unlock KNX, unlock value at each of the five prices, the 30-day volume taken from Inputs, and the ratio of unlock value to volume at USD 0.16 and at the listing reference. Ratios read INPUT REQUIRED until a volume is entered.</td></tr>
+<tr><td>Composition</td><td>Class-by-class breakdown of the T+0 float and of the T+13 unlock, with USD value at USD 0.16 and at the listing reference.</td></tr>
+</tbody>
+</table>
+<p>The price scenarios are reference points for reading unlock value, not forecasts. Every unlock figure ties to the schedule grid as reproduced in <code>2.1_unlock-grid_r2.xlsx</code>.</p>
+
+<h2>The TGE float and its cost basis</h2>
+<table class="data">
+<thead><tr><th>Class</th><th class="num">KNX at TGE</th><th class="num">% of float</th><th class="num">USD at 0.16</th><th>Cost basis</th></tr></thead>
+<tbody>
+<tr><td>Marketing and exchanges</td><td class="num">35,000,000</td><td class="num">66.04%</td><td class="num">5,600,000</td><td>None; company pocket, itemized to venue 1 (25,000,000), venue 2 (6,000,000) and a decentralized-exchange pool on Base paired with USDC (4,000,000)</td></tr>
+<tr><td>Liquidity / market making</td><td class="num">10,000,000</td><td class="num">18.87%</td><td class="num">1,600,000</td><td>None; returnable market-maker loan, terms to be published</td></tr>
+<tr><td>Community airdrop</td><td class="num">5,000,000</td><td class="num">9.43%</td><td class="num">800,000</td><td>None; retroactive and unconditional</td></tr>
+<tr><td>KOLpad allocations</td><td class="num">3,000,000</td><td class="num">5.66%</td><td class="num">480,000</td><td>40% discount to the TGE valuation: effective USD 0.12 at the USD 0.20 reference</td></tr>
+<tr><td>Investors, team, emissions, treasury, Foundation</td><td class="num">0</td><td class="num">0.00%</td><td class="num">0</td><td>Nothing bought in a token round is in the float</td></tr>
+<tr><th>Total</th><th class="num">53,000,000</th><th class="num">100.00%</th><th class="num">8,480,000</th><th></th></tr>
+</tbody>
+</table>
+<p>The KOLpad allocations are the only tokens in the float acquired at a price, and at a discount: 3,000,000 KNX (5.66% of the float) at TGE, with all 15,000,000 KOLpad KNX liquid by T+2. The other 50,000,000 KNX (94.34% of the float) are company pockets itemized to listing and liquidity obligations, the returnable market-maker loan and the airdrop. No investor, team or advisor token is in the float, and Treasury and Foundation release nothing at TGE. At USD 0.16 the float is 26.50% of the USD 32,000,000 round; at the USD 0.20 reference FDV is USD 200,000,000 and 94.70% of supply is locked at listing.</p>
+
+<h2>The month-13 wall</h2>
+<p>Every investor cliff ends at T+13, which is the month of the largest step in the schedule. From the schedule grid:</p>
+<table class="data">
+<thead><tr><th>Class</th><th class="num">Unlock at T+13 (KNX)</th><th class="num">USD at 0.16</th><th class="num">USD at 0.20</th><th>Then</th></tr></thead>
+<tbody>
+<tr><td>New round</td><td class="num">8,125,000</td><td class="num">1,300,000</td><td class="num">1,625,000</td><td>Main close 7,291,667 and top-up 833,333; same each month to T+36</td></tr>
+<tr><td>Emissions</td><td class="num">3,400,000</td><td class="num">544,000</td><td class="num">680,000</td><td>Cap year 2, to T+24; 2,890,000 from T+25</td></tr>
+<tr><td>Legacy investors</td><td class="num">2,083,333</td><td class="num">333,333</td><td class="num">416,667</td><td>Same each month to T+60</td></tr>
+<tr><td>Treasury and reserves</td><td class="num">1,666,667</td><td class="num">266,667</td><td class="num">333,333</td><td>To T+36</td></tr>
+<tr><td>Foundation</td><td class="num">1,666,667</td><td class="num">266,667</td><td class="num">333,333</td><td>To T+36</td></tr>
+<tr><td>Marketing and exchanges</td><td class="num">500,000</td><td class="num">80,000</td><td class="num">100,000</td><td>To T+30</td></tr>
+<tr><td>Team and advisors</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td>2,000,000 per month from T+14 to T+38</td></tr>
+<tr><th>Total at T+13</th><th class="num">17,441,667</th><th class="num">2,790,667</th><th class="num">3,488,333</th><th>19,441,667 KNX per month from T+14 to T+24, the peak of the schedule</th></tr>
+</tbody>
+</table>
+<p>The T+13 unlock is 32.91% of the day-one float. At USD 0.16 the T+14 to T+24 run rate is USD 3,110,667 per month, about USD 37,300,000 a year; year two (T+13 to T+24) releases 231,300,000 KNX, USD 37,008,000 at USD 0.16 and USD 46,260,000 at USD 0.20. The monthly unlock steps down to 18,931,667 KNX from T+25 to T+30 (emissions at 2,890,000), 18,431,667 KNX from T+31 to T+36 (marketing complete), 6,539,833 KNX from T+37 (legacy, emissions, team) and 4,539,833 KNX from T+39 to T+48 (legacy and emissions). The ratio the model reports is unlock value divided by 30-day spot volume; as arithmetic, holding the T+13 unlock at 10% of turnover requires USD 27,906,667 of volume over the 30 days, about USD 930,000 a day, sustained from the first unlock. That is a threshold illustration, not a volume assumption; the volume itself is the blank input.</p>
+<p>The largest line at T+13 is the new round, released at 8,125,000 KNX per month over 24 months and bought at USD 0.16 (main close) and USD 0.20 (top-up close). The legacy holders release 2,083,333 KNX per month, spread over 48 months.</p>
+
+<h2>Front-running of the calendar</h2>
+<p>Unlock calendars are public, and market research on unlock events finds that price impact typically begins about thirty days before the scheduled date as holders position ahead of it, with roughly nine in ten unlock events followed by short-term price declines and team unlocks the most damaging class. Applied to the schedule, the first calendar events are the KOLpad releases of 6,000,000 KNX at T+1 and T+2; the T+13 step begins to price in during T+12, and the T+14 team release, which is the class the research treats as most sensitive, sits one month behind it. The schedule mitigates this in three ways that are visible in the grid: no team, investor or advisor token unlocks at TGE or within the first year; the legacy investor release is spread over 48 months; and the emissions cap falls each year. What the schedule cannot do is supply volume, which is why the model leaves it as an input.</p>
+
+<section class="sources"><h2>Sources</h2><ul>
+<li>Token Release Schedule, 19 October 2026 (files/2.1_token-release-schedule_2026-10-19_na.xlsx), sheet Token Release Schedule, rows 6 to 11, grid rows 15 to 75, KOLpad allocation arithmetic X17 to X27, day-one float AA14 to AB21; sheet InvestorInsiders Breakdown, rows 9 to 18 (cost per token)</li>
+<li>Keyrock, "From Locked to Liquidity: What 16,000+ Token Unlocks Teach Us", https://keyrock.com/from-locked-to-liquidity-what-16000-token-unlocks-teach-us/, accessed 17 September 2026</li>
+<li>Generated workbooks 2.4_sell-pressure_r2.xlsx and 2.1_unlock-grid_r2.xlsx</li>
+</ul></section>
+<h2>Documents</h2><ul class="files"><li><a href="../files/2.4_sell-pressure_r2.xlsx">2.4_sell-pressure_r2.xlsx</a><span class="fmeta">generated working file, revision 2</span></li></ul></main>
+<footer class="bottom">Confidential. Provided to named recipients under a signed confidentiality undertaking for the sole purpose of evaluating an investment in Konnex. No part may be copied, forwarded or disclosed. Nothing in this room is an offer of securities in any jurisdiction. Revision 2, 2026-10-19. Canonical model: Token Release Schedule of 19 October 2026. TGE target Q1 2027 (model working date 5 February 2027).</footer>
+<script src="../assets/room.js"></script></body></html>
